@@ -452,6 +452,24 @@ Change widths as necessary
     <body>
         <h3>About the Request Page</h3>
         <p>Each request is assigned a unique number. The number assigned is based on the order it's entered into the system.</p>
+<<<<<<< HEAD
+=======
+        <div class="highlight"><pre><a name="public_records_portal--prr.py-idio.html-1"></a><span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">email</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">assigned_to_name</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">assigned_to_email</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">assigned_to_reason</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">phone</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">alias</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+<a name="public_records_portal--prr.py-idio.html-2"></a>	<span class="sd">&quot;&quot;&quot; Make the request. At minimum you need to communicate which record(s) you want, probably with some text.&quot;&quot;&quot;</span>
+<a name="public_records_portal--prr.py-idio.html-3"></a>	<span class="n">request_id</span> <span class="o">=</span> <span class="n">find_request</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-4"></a>	<span class="k">if</span> <span class="ow">not</span> <span class="n">request_id</span><span class="p">:</span>
+<a name="public_records_portal--prr.py-idio.html-5"></a>		<span class="n">request_id</span> <span class="o">=</span> <span class="n">create_request</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">,</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-6"></a>		<span class="n">new_owner_id</span> <span class="o">=</span> <span class="n">assign_owner</span><span class="p">(</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="n">assigned_to_reason</span><span class="p">,</span> <span class="n">email</span> <span class="o">=</span> <span class="n">assigned_to_email</span><span class="p">,</span> <span class="n">alias</span> <span class="o">=</span> <span class="n">assigned_to_name</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-7"></a>		<span class="k">if</span> <span class="n">email</span><span class="p">:</span> <span class="c"># If the user provided an e-mail address, add them as a subscriber to the request.</span>
+<a name="public_records_portal--prr.py-idio.html-8"></a>			<span class="n">user_id</span> <span class="o">=</span> <span class="n">create_or_return_user</span><span class="p">(</span><span class="n">email</span> <span class="o">=</span> <span class="n">email</span><span class="p">,</span> <span class="n">alias</span> <span class="o">=</span> <span class="n">alias</span><span class="p">,</span> <span class="n">phone</span> <span class="o">=</span> <span class="n">phone</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-9"></a>			<span class="n">subscriber_id</span> <span class="o">=</span> <span class="n">create_subscriber</span><span class="p">(</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-10"></a>			<span class="n">generate_prr_emails</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">notification_type</span> <span class="o">=</span> <span class="s">&quot;Request made&quot;</span><span class="p">,</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">subscriber_id</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-11"></a>		<span class="n">open_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+<a name="public_records_portal--prr.py-idio.html-12"></a>		<span class="k">return</span> <span class="n">request_id</span><span class="p">,</span> <span class="bp">True</span>
+<a name="public_records_portal--prr.py-idio.html-13"></a>	<span class="k">return</span> <span class="n">request_id</span><span class="p">,</span> <span class="bp">False</span>
+</pre></div>
+
+>>>>>>> c0a4c88b12edc3562ae816bdf75b6bc5b32e52f3
 
         <p>This is the message submitted by the requester. Members of the public will be able to view this message.</p>
 
@@ -488,6 +506,7 @@ Change widths as necessary
 <a name="public_records_portal--prr.py-idio.html-14"></a>	<span class="k">if</span> <span class="n">notify</span><span class="p">:</span>
 <a name="public_records_portal--prr.py-idio.html-15"></a>		<span class="n">generate_prr_emails</span><span class="p">(</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">request_id</span><span class="p">,</span> <span class="n">notification_type</span> <span class="o">=</span> <span class="s">&quot;Request assigned&quot;</span><span class="p">,</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span><span class="p">)</span>
 <a name="public_records_portal--prr.py-idio.html-16"></a>	<span class="k">return</span> <span class="n">new_owner_id</span>
+<<<<<<< HEAD
 <a name="public_records_portal--prr.py-idio.html-17"></a>
 <a name="public_records_portal--prr.py-idio.html-18"></a>
 <a name="public_records_portal--prr.py-idio.html-19"></a><span class="k">def</span> <span class="nf">allowed_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -571,6 +590,8 @@ Change widths as necessary
 <a name="public_records_portal--prr.py-idio.html-97"></a>	<span class="k">if</span> <span class="n">notes</span><span class="p">:</span>
 <a name="public_records_portal--prr.py-idio.html-98"></a>		<span class="k">return</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <a name="public_records_portal--prr.py-idio.html-99"></a>	<span class="k">return</span> <span class="bp">None</span>
+=======
+>>>>>>> c0a4c88b12edc3562ae816bdf75b6bc5b32e52f3
 </pre></div>
 
 
