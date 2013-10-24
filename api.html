@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecordTrac Documentation</title>
+<title>API</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -360,100 +360,216 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 </style>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+<style>
+.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #ffffff; }
+.highlight .tok-c { color: #888888 } /* Comment */
+.highlight .tok-err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .tok-k { color: #008800; font-weight: bold } /* Keyword */
+.highlight .tok-cm { color: #888888 } /* Comment.Multiline */
+.highlight .tok-cp { color: #cc0000; font-weight: bold } /* Comment.Preproc */
+.highlight .tok-c1 { color: #888888 } /* Comment.Single */
+.highlight .tok-cs { color: #cc0000; font-weight: bold; background-color: #fff0f0 } /* Comment.Special */
+.highlight .tok-gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .tok-ge { font-style: italic } /* Generic.Emph */
+.highlight .tok-gr { color: #aa0000 } /* Generic.Error */
+.highlight .tok-gh { color: #333333 } /* Generic.Heading */
+.highlight .tok-gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .tok-go { color: #888888 } /* Generic.Output */
+.highlight .tok-gp { color: #555555 } /* Generic.Prompt */
+.highlight .tok-gs { font-weight: bold } /* Generic.Strong */
+.highlight .tok-gu { color: #666666 } /* Generic.Subheading */
+.highlight .tok-gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .tok-kc { color: #008800; font-weight: bold } /* Keyword.Constant */
+.highlight .tok-kd { color: #008800; font-weight: bold } /* Keyword.Declaration */
+.highlight .tok-kn { color: #008800; font-weight: bold } /* Keyword.Namespace */
+.highlight .tok-kp { color: #008800 } /* Keyword.Pseudo */
+.highlight .tok-kr { color: #008800; font-weight: bold } /* Keyword.Reserved */
+.highlight .tok-kt { color: #888888; font-weight: bold } /* Keyword.Type */
+.highlight .tok-m { color: #0000DD; font-weight: bold } /* Literal.Number */
+.highlight .tok-s { color: #dd2200; background-color: #fff0f0 } /* Literal.String */
+.highlight .tok-na { color: #336699 } /* Name.Attribute */
+.highlight .tok-nb { color: #003388 } /* Name.Builtin */
+.highlight .tok-nc { color: #bb0066; font-weight: bold } /* Name.Class */
+.highlight .tok-no { color: #003366; font-weight: bold } /* Name.Constant */
+.highlight .tok-nd { color: #555555 } /* Name.Decorator */
+.highlight .tok-ne { color: #bb0066; font-weight: bold } /* Name.Exception */
+.highlight .tok-nf { color: #0066bb; font-weight: bold } /* Name.Function */
+.highlight .tok-nl { color: #336699; font-style: italic } /* Name.Label */
+.highlight .tok-nn { color: #bb0066; font-weight: bold } /* Name.Namespace */
+.highlight .tok-py { color: #336699; font-weight: bold } /* Name.Property */
+.highlight .tok-nt { color: #bb0066; font-weight: bold } /* Name.Tag */
+.highlight .tok-nv { color: #336699 } /* Name.Variable */
+.highlight .tok-ow { color: #008800 } /* Operator.Word */
+.highlight .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .tok-mf { color: #0000DD; font-weight: bold } /* Literal.Number.Float */
+.highlight .tok-mh { color: #0000DD; font-weight: bold } /* Literal.Number.Hex */
+.highlight .tok-mi { color: #0000DD; font-weight: bold } /* Literal.Number.Integer */
+.highlight .tok-mo { color: #0000DD; font-weight: bold } /* Literal.Number.Oct */
+.highlight .tok-sb { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Backtick */
+.highlight .tok-sc { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Char */
+.highlight .tok-sd { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Doc */
+.highlight .tok-s2 { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Double */
+.highlight .tok-se { color: #0044dd; background-color: #fff0f0 } /* Literal.String.Escape */
+.highlight .tok-sh { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Heredoc */
+.highlight .tok-si { color: #3333bb; background-color: #fff0f0 } /* Literal.String.Interpol */
+.highlight .tok-sx { color: #22bb22; background-color: #f0fff0 } /* Literal.String.Other */
+.highlight .tok-sr { color: #008800; background-color: #fff0ff } /* Literal.String.Regex */
+.highlight .tok-s1 { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Single */
+.highlight .tok-ss { color: #aa6600; background-color: #fff0f0 } /* Literal.String.Symbol */
+.highlight .tok-bp { color: #003388 } /* Name.Builtin.Pseudo */
+.highlight .tok-vc { color: #336699 } /* Name.Variable.Class */
+.highlight .tok-vg { color: #dd7700 } /* Name.Variable.Global */
+.highlight .tok-vi { color: #3333bb } /* Name.Variable.Instance */
+.highlight .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article">
 <div id="header">
-<h1>RecordTrac Documentation</h1>
+<h1>API</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_getting_a_request_object">Getting a request object</a></li>
+<li><a href="#_explanation_of_fields_in_the_request">Explanation of fields in the request:</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_welcome">Welcome</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is the home page for documentation for RecordTrac app.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-For help contact &#8230;
-</td>
-</tr>
-</table>
+<p><a href="index.html">back to index page</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what_this_is">What This Is</h2>
+<h2 id="_getting_a_request_object">Getting a request object</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="overview-of-app.html">Overview Of App</a></p>
-</li>
-<li>
-<p><a href="why-it-was-built.html">Why It Was Built</a></p>
-</li>
-<li>
-<p><a href="research-and-references.html">Research And References</a></p>
-</li>
-<li>
-<p><a href="principles.html">Principles</a></p>
+<p>by ID</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_how_is_this_built">How Is This Built</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Learn about the technical details of implementation so you can see what&#8217;s involved.</p>
+<p>GET <a href="http://records.oaklandnet.com/api/request/1">http://records.oaklandnet.com/api/request/1</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="json language-json"><span class="tok-p">{</span>
+    <span class="tok-nt">&quot;creator_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;current_owner&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:18.998278&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;department&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;extended&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;notes&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:55.982495&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Sent the resolution and a link online for more information.&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">],</span>
+    <span class="tok-nt">&quot;owners&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:19.569128&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;She is the open government coordinator&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">2</span>
+        <span class="tok-p">},</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.755757&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed request.&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
+        <span class="tok-p">},</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-13T21:56:13.163716&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">5</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;He&#39;s the PRR liaison&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">19</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">],</span>
+    <span class="tok-nt">&quot;qas&quot;</span><span class="tok-p">:</span> <span class="tok-p">[],</span>
+    <span class="tok-nt">&quot;records&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;access&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:23.329666&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;description&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Resolution 84208 CMS&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;doc_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;download_url&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;filename&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;url&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;http://oakland.legistar.com/LegislationDetail.aspx?ID=1283701&amp;GUID=32C352ED-A6F4-4933-AA84-0CD72419ABDA&amp;Options=ID|Text|&amp;Search=84208&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">],</span>
+    <span class="tok-nt">&quot;status&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed. Fulfilled&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;status_updated&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.932147&quot;</span><span class="tok-p">,</span>
+    <span class="tok-nt">&quot;subscribers&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
+        <span class="tok-p">{</span>
+            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:20.203865&quot;</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;owner_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
+            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">],</span>
+    <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;I need a copy of the resolution declaring February 23, 2013 Open Data Day in the City of Oakland.&quot;</span>
+<span class="tok-p">}</span>
+</code></pre>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_api_documentation">API Documentation</h2>
-<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p><a href="api-documentation.html">Api Documentation</a></p>
+<p>by page number</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_developer_documentation">Developer Documentation</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>How to modify and develop the app&#8217;s source code.</p>
-</div>
-<div class="sect2">
-<h3 id="_source_code">Source Code</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/codeforamerica/public-records">Source Code (Github)</a></p>
-</li>
-<li>
-<p><a href="https://github.com/codeforamerica/public-records/issues">Issue Tracker (Github)</a></p>
-</li>
-</ul>
+<p>GET <a href="http://records.oaklandnet.com/api/request?page=2">http://records.oaklandnet.com/api/request?page=2</a></p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_developer_docs">Developer Docs</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="db-helpers.html">Db Helpers</a></p>
-</li>
-</ul>
+</div>
+<div class="sect1">
+<h2 id="_explanation_of_fields_in_the_request">Explanation of fields in the request:</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Request</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+<span class="tok-c"># The public records request</span>
+	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;request&#39;</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">extended</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Boolean</span><span class="tok-p">,</span> <span class="tok-n">default</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">)</span> <span class="tok-c"># Has the due date been extended?</span>
+	<span class="tok-n">qas</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;QA&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;QA.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of QA units for this request</span>
+	<span class="tok-n">status_updated</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(),</span> <span class="tok-n">unique</span><span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span> <span class="tok-c"># The actual request text.</span>
+	<span class="tok-n">subscribers</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span> <span class="tok-o">=</span><span class="tok-s">&quot;all, delete&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of subscribers following this request.</span>
+	<span class="tok-n">owners</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Owner&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of city staff ever assigned to the request.</span>
+	<span class="tok-n">current_owner</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">)</span> <span class="tok-c"># The Owner ID for the city staff that currently &#39;owns&#39; the request.</span>
+	<span class="tok-n">records</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Record&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Record.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of records that have been uploaded for this request.</span>
+	<span class="tok-n">notes</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Note&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Note.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of notes appended to this request.</span>
+	<span class="tok-n">status</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">400</span><span class="tok-p">))</span> <span class="tok-c"># The status of the request (open, closed, etc.)</span>
+	<span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># If city staff created it on behalf of the public, otherwise the creator is the subscriber with creator = true</span>
+	<span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-n">creator_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Request </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span> <span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -461,7 +577,7 @@ For help contact &#8230;
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 13:54:56 PDT
+Last updated 2013-10-24 13:54:55 PDT
 </div>
 </div>
 </body>
