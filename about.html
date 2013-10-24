@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>API</title>
+<title>About RecordTrac</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -426,12 +426,14 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </head>
 <body class="article">
 <div id="header">
-<h1>API</h1>
+<h1>About RecordTrac</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_getting_a_request_object">Getting a request object</a></li>
-<li><a href="#_explanation_of_fields_in_the_request">Explanation of fields in the request:</a></li>
+<li><a href="#_what_is_recordtrac">What Is RecordTrac?</a></li>
+<li><a href="#_why_was_recordtrac_built">Why was RecordTrac built?</a></li>
+<li><a href="#_design_principles">Design Principles</a></li>
+<li><a href="#_research_and_references">Research and references</a></li>
 </ul>
 </div>
 </div>
@@ -444,140 +446,80 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_getting_a_request_object">Getting a request object</h2>
+<h2 id="_what_is_recordtrac">What Is RecordTrac?</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>by ID</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>GET <a href="http://records.oaklandnet.com/api/request/1">http://records.oaklandnet.com/api/request/1</a></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="json language-json"><span class="tok-p">{</span>
-    <span class="tok-nt">&quot;creator_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;current_owner&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:18.998278&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;department&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;extended&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;notes&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:55.982495&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Sent the resolution and a link online for more information.&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;owners&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:19.569128&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;She is the open government coordinator&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">2</span>
-        <span class="tok-p">},</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.755757&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed request.&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">},</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-13T21:56:13.163716&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">5</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;He&#39;s the PRR liaison&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">19</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;qas&quot;</span><span class="tok-p">:</span> <span class="tok-p">[],</span>
-    <span class="tok-nt">&quot;records&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;access&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:23.329666&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;description&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Resolution 84208 CMS&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;doc_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;download_url&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;filename&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;url&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;http://oakland.legistar.com/LegislationDetail.aspx?ID=1283701&amp;GUID=32C352ED-A6F4-4933-AA84-0CD72419ABDA&amp;Options=ID|Text|&amp;Search=84208&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;status&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed. Fulfilled&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;status_updated&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.932147&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;subscribers&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:20.203865&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;owner_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;I need a copy of the resolution declaring February 23, 2013 Open Data Day in the City of Oakland.&quot;</span>
-<span class="tok-p">}</span>
-</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>by page number</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>GET <a href="http://records.oaklandnet.com/api/request?page=2">http://records.oaklandnet.com/api/request?page=2</a></p>
+<p>RecordTrac is a quick, simple way for an individual to submit a public records request to a governmental agency. The web application also allows government employees manage, respond to, and fulfill incoming requests. By displaying all records requests and responsive documents, members of the public may find what they need without submitting another public records request.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_explanation_of_fields_in_the_request">Explanation of fields in the request:</h2>
+<h2 id="_why_was_recordtrac_built">Why was RecordTrac built?</h2>
 <div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Request</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
-<span class="tok-c"># The public records request</span>
-	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;request&#39;</span>
-	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span>
-	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
-	<span class="tok-n">extended</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Boolean</span><span class="tok-p">,</span> <span class="tok-n">default</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">)</span> <span class="tok-c"># Has the due date been extended?</span>
-	<span class="tok-n">qas</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;QA&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;QA.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of QA units for this request</span>
-	<span class="tok-n">status_updated</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
-	<span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(),</span> <span class="tok-n">unique</span><span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span> <span class="tok-c"># The actual request text.</span>
-	<span class="tok-n">subscribers</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span> <span class="tok-o">=</span><span class="tok-s">&quot;all, delete&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of subscribers following this request.</span>
-	<span class="tok-n">owners</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Owner&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of city staff ever assigned to the request.</span>
-	<span class="tok-n">current_owner</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">)</span> <span class="tok-c"># The Owner ID for the city staff that currently &#39;owns&#39; the request.</span>
-	<span class="tok-n">records</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Record&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Record.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of records that have been uploaded for this request.</span>
-	<span class="tok-n">notes</span> <span class="tok-o">=</span> <span class="tok-n">relationship</span><span class="tok-p">(</span><span class="tok-s">&quot;Note&quot;</span><span class="tok-p">,</span> <span class="tok-n">cascade</span><span class="tok-o">=</span><span class="tok-s">&quot;all,delete&quot;</span><span class="tok-p">,</span> <span class="tok-n">order_by</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Note.date_created.desc()&quot;</span><span class="tok-p">)</span> <span class="tok-c"># The list of notes appended to this request.</span>
-	<span class="tok-n">status</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">400</span><span class="tok-p">))</span> <span class="tok-c"># The status of the request (open, closed, etc.)</span>
-	<span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># If city staff created it on behalf of the public, otherwise the creator is the subscriber with creator = true</span>
-	<span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span>
-	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
-		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span>
-		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
-		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-n">creator_id</span>
-		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
-	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
-		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Request </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span> <span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span>
-</code></pre>
+<div class="paragraph">
+<p>The 2013 Code for America fellows created RecordTrac with the City of Oakland. As public records requests became larger and more complex, city employees found coordinating a response to be difficult. The old software system no longer met their needs and many requests remained untracked.</p>
 </div>
+<div class="paragraph">
+<p>Members of the public complained they didn’t understand what happened after they submitted their requests and it took too long to get the records they needed.</p>
+</div>
+<div class="paragraph">
+<p>By making everything completely transparent, it became easier for the City and members of the public to understand what happens to each request. Although this app was initially developed for the City of Oakland, any governmental agencies who is required by law to respond to requests for information or documents can reuse RecordTrac.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design_principles">Design Principles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The primary goal was to create a central, shared view for all public records requests and responses from government employees.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Minimum in, maximum out: Only ask what you need of requesters to fulfill a public records request.</p>
+</li>
+<li>
+<p>Transparency: Government employees and members of the public share a view of all requests and how they are being fulfilled.</p>
+</li>
+<li>
+<p>Simple and fun: It should be easy to submit a public records requests.</p>
+</li>
+<li>
+<p>Comfortable and confident: Users should not be intimidated and should fully understand what happens when they take an action.</p>
+</li>
+<li>
+<p>Engaging: Requesters should be able to easily interact with government employees and share information with others.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>RecordTrac is not designed to be a document management system or a tool to help government employees redact sensitive or confidential records. It is not a timer, keeping track of how long a government employee has to fulfill a records request. Although you can learn about how a particular governmental agency fulfills a public records request by using RecordTrac, it is not designed to teach bout about freedom of information laws.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_research_and_references">Research and references</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The 2013 Code for America fellows conducted research on the way the City of Oakland managed and fulfilled public records requests. This influenced the web app&#8217;s development. Links to the research can be found below:
+* <a href="http://codeforamerica.github.io/public-records/research.html">How the City of Oakland Handles Public Records Requests</a>
+* <a href="http://codeforamerica.github.io/public-records/ibpm-analysis.html">http://codeforamerica.github.io/public-records/ibpm-analysis.html</a> [Analysis of Past Public Records Requests]</p>
+</div>
+<div class="paragraph">
+<p>The Code for America fellows piloted RecordTrac in the City of Oakland before it was released to the public on October 1, 2013. To learn about the testing strategy, visit the following web page:
+* <a href="http://codeforamerica.github.io/public-records/teststrategy.html">http://codeforamerica.github.io/public-records/teststrategy.html</a> [Testing Strategy for Public Records Request Management System]</p>
+</div>
+<div class="paragraph">
+<p>If you want to know more about the California Public Records Act and Oakland&#8217;s Sunshine Ordinance, check out these resources:
+* <a href="http://www2.oaklandnet.com/Government/o/CityAdministration/d/PublicEthics/s/OpenGovernment/OAK040723">City of Oakland&#8217;s Public Ethics Commission</a>
+* <a href="http://www.oaklandcityattorney.org/resources/PubInfoRequest.html">City Attorney&#8217;s website</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 14:49:33 PDT
+Last updated 2013-10-24 14:49:31 PDT
 </div>
 </div>
 </body>
