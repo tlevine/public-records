@@ -427,11 +427,35 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <body class="article">
 <div id="header">
 <h1>DB Helpers</h1>
+<span id="author" class="author">Description of the functions in the `db_helpers.py` file.</span><br>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_intro">Intro</a></li>
-<li><a href="#_adding_records">Adding Records</a></li>
+<li><a href="#_get_obj">get_obj</a></li>
+<li><a href="#_get_objs">get_objs</a></li>
+<li><a href="#_get_request_by_owner">get_request_by_owner</a></li>
+<li><a href="#_get_owners_by_user_id">get_owners_by_user_id</a></li>
+<li><a href="#_get_requests_by_filters">get_requests_by_filters</a></li>
+<li><a href="#_put_obj">put_obj</a></li>
+<li><a href="#_update_obj">update_obj</a></li>
+<li><a href="#_get_attribute">get_attribute</a></li>
+<li><a href="#_create_qa">create_QA</a></li>
+<li><a href="#_create_request">create_request</a></li>
+<li><a href="#_create_subscriber">create_subscriber</a></li>
+<li><a href="#_create_note">create_note</a></li>
+<li><a href="#_create_record">create_record</a></li>
+<li><a href="#_create_answer">create_answer</a></li>
+<li><a href="#_create_or_return_user">create_or_return_user</a></li>
+<li><a href="#_create_user">create_user</a></li>
+<li><a href="#_update_user">update_user</a></li>
+<li><a href="#_update_user_2">update_user</a></li>
+<li><a href="#_change_request_status">change_request_status</a></li>
+<li><a href="#_find_request">find_request</a></li>
+<li><a href="#_find_owner">find_owner</a></li>
+<li><a href="#_add_staff_participant">add_staff_participant</a></li>
+<li><a href="#_authenticate_login">authenticate_login</a></li>
+<li><a href="#_set_random_password">set_random_password</a></li>
+<li><a href="#_set_password">set_password</a></li>
 </ul>
 </div>
 </div>
@@ -444,11 +468,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_intro">Intro</h2>
+<h2 id="_get_obj">get_obj</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The functionality of the database can be found in the <code>db_helpers.py</code> file.</p>
-</div>
 <div class="paragraph">
 <p>This searches the database for an object via its class/type (defined in the
 <code>models.py</code> file) and ID and returns the object:</p>
@@ -478,6 +499,11 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_objs">get_objs</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This searches the database for all objects of a certain class/type (defined in
 the "models.py" file) and returns a queryset.</p>
@@ -502,29 +528,17 @@ the "models.py" file) and returns a queryset.</p>
 	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Record&quot;</span><span class="tok-p">:</span>
 		<span class="tok-k">return</span> <span class="tok-n">Record</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
 	<span class="tok-k">return</span> <span class="tok-bp">None</span>
-
-<span class="tok-c">## @export &quot;get_avg_response_time&quot;</span>
-<span class="tok-k">def</span> <span class="tok-nf">get_avg_response_time</span><span class="tok-p">(</span><span class="tok-n">department</span><span class="tok-p">):</span>
-	<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-p">,</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">current_owner</span> <span class="tok-o">==</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">func</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">department</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-n">department</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()))</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-bp">None</span>
-	<span class="tok-n">num_closed</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
-	<span class="tok-k">for</span> <span class="tok-n">request</span> <span class="tok-ow">in</span> <span class="tok-n">q</span><span class="tok-p">:</span>
-		<span class="tok-k">if</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status</span> <span class="tok-ow">and</span> <span class="tok-s">&#39;Closed&#39;</span> <span class="tok-ow">in</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status</span><span class="tok-p">:</span>
-			<span class="tok-k">if</span> <span class="tok-n">response_time</span><span class="tok-p">:</span>
-				<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-n">response_time</span> <span class="tok-o">+</span> <span class="tok-p">(</span><span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status_updated</span> <span class="tok-o">-</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">date_created</span><span class="tok-p">)</span>
-			<span class="tok-k">else</span><span class="tok-p">:</span>
-				<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status_updated</span> <span class="tok-o">-</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">date_created</span>
-			<span class="tok-n">num_closed</span> <span class="tok-o">=</span> <span class="tok-n">num_closed</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
-	<span class="tok-k">if</span> <span class="tok-n">num_closed</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
-		<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-n">response_time</span><span class="tok-o">.</span><span class="tok-n">seconds</span> <span class="tok-o">/</span> <span class="tok-n">num_closed</span>
-		<span class="tok-k">return</span> <span class="tok-n">avg</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
 </code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>&lt;/p&gt;</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_request_by_owner">get_request_by_owner</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Retrieves a request associated with a particular owner:</p>
 </div>
@@ -538,6 +552,11 @@ the "models.py" file) and returns a queryset.</p>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_owners_by_user_id">get_owners_by_user_id</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>A user can be associated with multiple owners. Gets owner by their user ID:</p>
 </div>
@@ -551,6 +570,11 @@ the "models.py" file) and returns a queryset.</p>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_requests_by_filters">get_requests_by_filters</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Retrieves requests based on filters provided:</p>
 </div>
@@ -590,7 +614,7 @@ the "models.py" file) and returns a queryset.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_adding_records">Adding Records</h2>
+<h2 id="_put_obj">put_obj</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Adds a particular object to the database:</p>
@@ -607,6 +631,11 @@ the "models.py" file) and returns a queryset.</p>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_update_obj">update_obj</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Obtain the object its ID and type, if the object is not provided, and updates
 the specified attribute for that object. If the command is successful, returns
@@ -630,6 +659,11 @@ the word <em>true.</em>:</p>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_attribute">get_attribute</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Gets an object by its ID and type to return the specified attribute for that
 object, if the object is not provided:</p>
@@ -651,10 +685,384 @@ object, if the object is not provided:</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_create_qa">create_QA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a question object and return its ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_QA</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">question</span><span class="tok-p">,</span> <span class="tok-n">owner_id</span><span class="tok-p">):</span>
+	<span class="tok-sd">&quot;&quot;&quot; Create a QA object and return the ID. &quot;&quot;&quot;</span>
+	<span class="tok-n">qa</span> <span class="tok-o">=</span> <span class="tok-n">QA</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">question</span> <span class="tok-o">=</span> <span class="tok-n">question</span><span class="tok-p">,</span> <span class="tok-n">owner_id</span> <span class="tok-o">=</span> <span class="tok-n">owner_id</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">qa</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">qa</span><span class="tok-o">.</span><span class="tok-n">id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_request">create_request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an object for a request and returns its ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_request</span><span class="tok-p">(</span><span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-sd">&quot;&quot;&quot; Create a Request object and return the ID. &quot;&quot;&quot;</span>
+	<span class="tok-n">req</span> <span class="tok-o">=</span> <span class="tok-n">Request</span><span class="tok-p">(</span><span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">creator_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">req</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">req</span><span class="tok-o">.</span><span class="tok-n">id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_subscriber">create_subscriber</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>Creates an object for the subscriber and returns its ID.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_subscriber</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">):</span>
+	<span class="tok-sd">&quot;&quot;&quot; Create a Subscriber object and return the ID. &quot;&quot;&quot;</span>
+	<span class="tok-n">subscriber</span> <span class="tok-o">=</span> <span class="tok-n">Subscriber</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">subscriber</span><span class="tok-p">:</span>
+		<span class="tok-n">subscriber</span> <span class="tok-o">=</span> <span class="tok-n">Subscriber</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">subscriber</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+		<span class="tok-k">return</span> <span class="tok-n">subscriber</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">,</span> <span class="tok-bp">True</span>
+	<span class="tok-k">return</span> <span class="tok-n">subscriber</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">,</span> <span class="tok-bp">False</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_note">create_note</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>Creates an object for a note and returns its ID.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_note</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">):</span>
+	<span class="tok-sd">&quot;&quot;&quot; Create a Note object and return the ID. &quot;&quot;&quot;</span>
+	<span class="tok-k">try</span><span class="tok-p">:</span>
+		<span class="tok-n">note</span> <span class="tok-o">=</span> <span class="tok-n">Note</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span>
+		<span class="tok-n">put_obj</span><span class="tok-p">(</span><span class="tok-n">note</span><span class="tok-p">)</span>
+		<span class="tok-k">return</span> <span class="tok-n">note</span><span class="tok-o">.</span><span class="tok-n">id</span>
+	<span class="tok-k">except</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-bp">None</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_record">create_record</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>Creates an object for an uploaded record and returns its ID.</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_record</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">description</span><span class="tok-p">,</span> <span class="tok-n">doc_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">filename</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">access</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">url</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-c"># try:</span>
+		<span class="tok-n">record</span> <span class="tok-o">=</span> <span class="tok-n">Record</span><span class="tok-p">(</span><span class="tok-n">doc_id</span> <span class="tok-o">=</span> <span class="tok-n">doc_id</span><span class="tok-p">,</span> <span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">description</span> <span class="tok-o">=</span> <span class="tok-n">description</span><span class="tok-p">,</span> <span class="tok-n">filename</span> <span class="tok-o">=</span> <span class="tok-n">filename</span><span class="tok-p">,</span> <span class="tok-n">url</span> <span class="tok-o">=</span> <span class="tok-n">url</span><span class="tok-p">,</span> <span class="tok-n">access</span> <span class="tok-o">=</span> <span class="tok-n">access</span><span class="tok-p">)</span>
+		<span class="tok-n">put_obj</span><span class="tok-p">(</span><span class="tok-n">record</span><span class="tok-p">)</span>
+		<span class="tok-k">return</span> <span class="tok-n">record</span><span class="tok-o">.</span><span class="tok-n">id</span>
+	<span class="tok-c"># except:</span>
+		<span class="tok-c"># return None</span>
+
+<span class="tok-k">def</span> <span class="tok-nf">remove_obj</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span><span class="tok-p">):</span>
+	<span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">get_obj</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">delete</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_answer">create_answer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an object for the public&#8217;s response to a particular question and returns its ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_answer</span><span class="tok-p">(</span><span class="tok-n">qa_id</span><span class="tok-p">,</span> <span class="tok-n">subscriber_id</span><span class="tok-p">,</span> <span class="tok-n">answer</span><span class="tok-p">):</span>
+	<span class="tok-n">qa</span> <span class="tok-o">=</span> <span class="tok-n">get_obj</span><span class="tok-p">(</span><span class="tok-s">&quot;QA&quot;</span><span class="tok-p">,</span> <span class="tok-n">qa_id</span><span class="tok-p">)</span>
+	<span class="tok-n">qa</span><span class="tok-o">.</span><span class="tok-n">subscriber_id</span> <span class="tok-o">=</span> <span class="tok-n">subscriber_id</span>
+	<span class="tok-n">qa</span><span class="tok-o">.</span><span class="tok-n">answer</span> <span class="tok-o">=</span> <span class="tok-n">answer</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">qa</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">qa</span><span class="tok-o">.</span><span class="tok-n">request_id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_or_return_user">create_or_return_user</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an object for a user and retruns its ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_or_return_user</span><span class="tok-p">(</span><span class="tok-n">email</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">not_id</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">email</span><span class="tok-p">:</span>
+		<span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span>
+		<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+		<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user</span><span class="tok-p">:</span>
+			<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">create_user</span><span class="tok-p">(</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span><span class="tok-p">)</span>
+		<span class="tok-k">else</span><span class="tok-p">:</span>
+			<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">update_user</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-n">alias</span><span class="tok-p">,</span> <span class="tok-n">phone</span><span class="tok-p">,</span> <span class="tok-n">department</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">not_id</span><span class="tok-p">:</span>
+			<span class="tok-k">return</span> <span class="tok-n">user</span>
+		<span class="tok-k">return</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">id</span>
+	<span class="tok-k">else</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">create_user</span><span class="tok-p">(</span><span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span><span class="tok-p">)</span>
+		<span class="tok-k">return</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_user">create_user</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an object for a user and retruns its ID.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_user</span><span class="tok-p">(</span><span class="tok-n">email</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">User</span><span class="tok-p">(</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span><span class="tok-p">,</span> <span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;ADMIN_PASSWORD&#39;</span><span class="tok-p">])</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">user</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_update_user">update_user</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Update a city employee&#8217;s phone number, department, and password.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">update_user</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">alias</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span>
+	<span class="tok-k">if</span> <span class="tok-n">phone</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span>
+	<span class="tok-k">if</span> <span class="tok-n">department</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">password</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;ADMIN_PASSWORD&#39;</span><span class="tok-p">]</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">user</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_update_user_2">update_user</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This important for multi-departmental requests. It adds a city employee to a request as a "helper," but does not change the point of contact for a request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">update_user</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">alias</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span>
+	<span class="tok-k">if</span> <span class="tok-n">phone</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span>
+	<span class="tok-k">if</span> <span class="tok-n">department</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">password</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;ADMIN_PASSWORD&#39;</span><span class="tok-p">]</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">user</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_change_request_status">change_request_status</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This changes the status of a particular request. City employees see three different statuses: open, overdue, and closed. The only statuses members of the public see are open and closed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">change_request_status</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">status</span><span class="tok-p">):</span>
+	<span class="tok-n">req</span> <span class="tok-o">=</span> <span class="tok-n">get_obj</span><span class="tok-p">(</span><span class="tok-s">&quot;Request&quot;</span><span class="tok-p">,</span> <span class="tok-n">request_id</span><span class="tok-p">)</span>
+	<span class="tok-n">req</span><span class="tok-o">.</span><span class="tok-n">status</span> <span class="tok-o">=</span> <span class="tok-n">status</span>
+	<span class="tok-n">req</span><span class="tok-o">.</span><span class="tok-n">status_updated</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">req</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_find_request">find_request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Allows users to search through requests by entering a word or phrase.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">find_request</span><span class="tok-p">(</span><span class="tok-n">text</span><span class="tok-p">):</span>
+	<span class="tok-n">req</span> <span class="tok-o">=</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+	<span class="tok-k">if</span> <span class="tok-n">req</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-n">req</span><span class="tok-o">.</span><span class="tok-n">id</span>
+	<span class="tok-k">return</span> <span class="tok-bp">None</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_find_owner">find_owner</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Allows users to search through requests by owner, or city employee who is responsible for fulfilling a particular request.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">find_owner</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">):</span>
+	<span class="tok-n">owner</span> <span class="tok-o">=</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+	<span class="tok-k">if</span> <span class="tok-n">owner</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-n">owner</span><span class="tok-o">.</span><span class="tok-n">id</span>
+	<span class="tok-k">return</span> <span class="tok-bp">None</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_staff_participant">add_staff_participant</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates an owner for the request if it doesn&#8217;t exist. The owner ID is returned as True if a new one is created, and false if it already exists.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">add_staff_participant</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">reason</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-sd">&quot;&quot;&quot; Creates an owner for the request if it doesn&#39;t exist, and returns the owner ID and True if a new one was created. Returns the owner ID and False if existing.&quot;&quot;&quot;</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user_id</span><span class="tok-p">:</span>
+		<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">create_or_return_user</span><span class="tok-p">(</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-p">)</span>
+	<span class="tok-n">participant</span> <span class="tok-o">=</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">participant</span><span class="tok-p">:</span>
+		<span class="tok-n">participant</span> <span class="tok-o">=</span> <span class="tok-n">Owner</span><span class="tok-p">(</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">reason</span> <span class="tok-o">=</span> <span class="tok-n">reason</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">participant</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+		<span class="tok-k">return</span> <span class="tok-n">participant</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">,</span> <span class="tok-bp">True</span>
+	<span class="tok-k">return</span> <span class="tok-n">participant</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">,</span> <span class="tok-bp">False</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_authenticate_login">authenticate_login</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>City employees are required to enter a username and password to upload records and send messages to requesters. The username is currently a city employee&#8217;s official email address.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">authenticate_login</span><span class="tok-p">(</span><span class="tok-n">email</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">email</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">create_or_return_user</span><span class="tok-p">(</span><span class="tok-n">email</span><span class="tok-o">=</span><span class="tok-n">email</span><span class="tok-p">,</span> <span class="tok-n">not_id</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">check_password</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">):</span>
+			<span class="tok-k">return</span> <span class="tok-n">user</span>
+		<span class="tok-k">if</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">password</span> <span class="tok-o">==</span> <span class="tok-n">password</span><span class="tok-p">:</span> <span class="tok-c"># Hash it</span>
+			<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">set_password</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">)</span>
+			<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+			<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+			<span class="tok-k">return</span> <span class="tok-n">user</span>
+	<span class="tok-k">return</span> <span class="tok-bp">None</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_random_password">set_random_password</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If users forget their password, a new random password is assigned to them so they are able to log into the system. This funcationality is limited to existing users. Currently users of the system are limited to offical city of Oakland employees.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">set_random_password</span><span class="tok-p">(</span><span class="tok-n">email</span><span class="tok-p">):</span>
+	<span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span>
+	<span class="tok-n">user</span> <span class="tok-o">=</span> <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user</span> <span class="tok-ow">or</span> <span class="tok-ow">not</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">department</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-bp">None</span> <span class="tok-c"># This is only for existing staff users, not a way to create a user, which we&#39;re not allowing yet.</span>
+	<span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">uuid</span><span class="tok-o">.</span><span class="tok-n">uuid4</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">hex</span>
+	<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">set_password</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+	<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+	<span class="tok-k">return</span> <span class="tok-n">password</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_password">set_password</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Allows city employees to change their passwords:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">set_password</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-p">):</span>
+	<span class="tok-k">try</span><span class="tok-p">:</span>
+		<span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">set_password</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">)</span>
+		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
+		<span class="tok-k">return</span> <span class="tok-bp">True</span>
+	<span class="tok-k">except</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-bp">False</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 15:59:04 PDT
+Last updated 2013-10-24 18:11:28 PDT
 </div>
 </div>
 </body>

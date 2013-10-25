@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to Redeploy RecordTrac</title>
+<title>RecordTrac&#8217;s Admin Features</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -366,91 +366,268 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_how_to_redeploy_recordtrac">How to Redeploy RecordTrac</h2>
+<h2 id="_recordtrac_s_admin_features">RecordTrac&#8217;s Admin Features</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_high_level_technical_dependencies">High-level technical dependencies</h3>
+<h3 id="_description">Description</h3>
 <div class="paragraph">
-<p>You will need to create new accounts for the following services.</p>
+<p>RecordTrac’s administrative controls allows the users to:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.heroku.com">Heroku or other PaaS (basic level free, web hosting)</a></p>
+<p>Edit or remove request text</p>
 </li>
 <li>
-<p><a href="http://www.scribd.com">Scribd (free, document hosting)</a></p>
+<p>Remove a record</p>
 </li>
 <li>
-<p><a href="http://akismet.com">Akismet (free, spam filter)</a></p>
+<p>Edit or remove the text of a note</p>
 </li>
 <li>
-<p><a href="http://sendgrid.com">Sendgrid (free, e-mail)</a></p>
+<p>Edit or remove a question</p>
+</li>
+<li>
+<p>Edit or remove an answer</p>
+</li>
+<li>
+<p>Add or remove a Public Records Request (PRR) liaison</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>It is pretty straightforward to switch from Scribd and Sendgrid to other services, and Akismet is by no means necessary. For hosting, it also doesn’t really matter what platform it is. These are not strict dependencies, although in its current state RecordTrac depends on them to run smoothly.</p>
+<p>The administrative controls allows the user to permanently delete records, requests, and notes from the database. Because of this, administrative access should be restricted to a small number of users.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_technical_instructions">Technical Instructions</h3>
+<h3 id="_how_to_remove_or_edit_a_request">How to Remove or Edit a Request</h3>
 <div class="paragraph">
-<p>1.) Decide on URL for app (this will be helpful when selecting a heroku URL, and pointing Scribd and Akismet to the right link as well)</p>
-</div>
-<div class="paragraph">
-<p>2.) Sign up/log into Github, fork <a href="https://github.com/codeforamerica/public-records">https://github.com/codeforamerica/public-records</a></p>
+<p>To remove or edit a request, visit records.oaklandnet.com/admin/requestview.</p>
 </div>
 <div class="paragraph">
-<p>3.) Then clone the forked repo locally.</p>
+<p>A description of the fields in the table displayed can be found below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Id: Unique ID assigned to each request.</p>
+</li>
+<li>
+<p>Text: Entire text of public records request.</p>
+</li>
+<li>
+<p>Date Created: The date the request was entered in RecordTrac.</p>
+</li>
+<li>
+<p>Status: Status of the records request, namely whether it’s open, closed, due soon, or overdue.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>4.) Sign up/log into Heroku and download Heroku toolbelt</p>
+<p>Clicking on the trashcan icon permanently deletes an entire request, while licking on the pencil icon will allow you to edit a request.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_remove_a_record">How to Remove a Record</h3>
+<div class="paragraph">
+<p>To remove a record, visit records.oaklandnet.com/admin/recordreview.</p>
 </div>
 <div class="paragraph">
-<p>5.) Create a Postgres database via Heroku add-ons</p>
+<p>You can only remove a record, not "edit" any of the fields.  Records include web links, uploaded electronic documents, and instructions on how to view or pick up copies of a record.</p>
 </div>
 <div class="paragraph">
-<p>6.) Sign up/ log into Scribd, sign up for developer account <a href="http://www.scribd.com/developers/signup_api">http://www.scribd.com/developers/signup_api</a></p>
+<p>A description of the fields in the table displayed can be found below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Id: Unique ID assigned to each request.</p>
+</li>
+<li>
+<p>Filename: Name of electronic record uploaded to RecordTrac.</p>
+</li>
+<li>
+<p>URL: Web address provided to requester.</p>
+</li>
+<li>
+<p>Download URL: Web address where you can automatically download the record.</p>
+</li>
+<li>
+<p>Access: Instructions on how to view or pick up copies of a record</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>7.) In the public-records repository, save settings.env.example as settings.env and replace SCRIBD_API_KEY and SCRIBD_API_SECRET with corresponding key and secret.</p>
+<p>Click on the trashcan icon to permanently delete the record from RecordTrac. You must also delete the record from Scribd.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_remove_or_edit_a_note">How to Remove or Edit a Note</h3>
+<div class="paragraph">
+<p>To edit or remove a note, visit records.oaklandnet.com/admin/noteview.</p>
 </div>
 <div class="paragraph">
-<p>8.) Sign up/ log into Sendgrid.</p>
+<p>A description of the fields in the table displayed can be found below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Id: Unique ID assigned to each request.</p>
+</li>
+<li>
+<p>Text: Entire text of the note.</p>
+</li>
+<li>
+<p>Date Created: The date the note was created.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>9.) In settings.env, replace MAIL_USERNAME and MAIL_PASSWORD with your Sendgrid username and password.</p>
+<p>Click on the trashcan icon to permanently delete the note from RecordTrac, while clicking on the pencil icon will allow you to edit the text of a note.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_remove_or_edit_a_question_and_answer_exchange">How to Remove or Edit a Question and Answer Exchange</h3>
+<div class="paragraph">
+<p>To remove posted questions and/or answers, visit records.oaklandnet.com/admin/qaview.</p>
 </div>
 <div class="paragraph">
-<p>10.) Sign up/log into Akismet via wordpress account and get an Akismet key</p>
+<p>A description of the fields in the table displayed can be found below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Id: Unique ID assigned to each request.</p>
+</li>
+<li>
+<p>Question: Entire text of the question asked by city staff.</p>
+</li>
+<li>
+<p>Answer: Entire response of question provided by member of the public.</p>
+</li>
+<li>
+<p>Date Created: The date the exchange was created</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>11.) In settings.env, replace AKISMET_KEY with corresponding key.</p>
+<p>Clicking on the trashcan icon permanently deletes the entire question and answer exchange, while clicking on the pencil icon will allow you to edit the text of the question and answer exchange.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_to_change_the_official_public_records_request_prr_liaison_for_a_department">How to Change the official Public Records Request (PRR) liaison for a department</h4>
+<div class="paragraph">
+<p>To change the Public Record Request (PRR) liaision, or the individual responsible for responding for responding to public records requests for a particular department, visit records.oaklandnet.com/admin/userview</p>
 </div>
 <div class="paragraph">
-<p>12.) Set all the environment variables in your local settings.env in your Heroku config as well, by the following command from your shell (you have to be logged into Heroku).</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>heroku config:set AKISMET_KEY=your_key --app heroku-app-name</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>(You have to do this for each environment variable)</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Variables that will be different in your heroku config vs. your local settings:
-ENVIRONMENT (should be ‘PRODUCTION’ in Heroku)
-APPLICATION_URL (should be your Heroku URL)
-SQLALCHEMY_DATABASE_URI (your Heroku database, technically could use it locally as well, but probably better to set up a local database)</pre>
-</div>
+<p>You will see a  list of all employees contained in the official city directory.</p>
 </div>
 <div class="paragraph">
-<p>13.) From the public-records directory: git push origin heroku</p>
+<p>A description of the fields in the table displayed can be found below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Contact for: Listing of departments the city employee is the PRR liaison for.</p>
+</li>
+<li>
+<p>Back-up for: Listing of departments the city employee is a backup for.</p>
+</li>
+<li>
+<p>Alias: Name of city employee.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Clicking on the trashcan icon permanently deletes the user. To edit the user’s information, click on the pencil icon. You then have the opportunity to edit the user&#8217;s name, email address, phone number, and which department they are the contact or backup for.</p>
+</div>
+<div class="paragraph">
+<p>Enter one of the following department names in the “Contact for” or “Backup For” field. If a user is responsible for multiple departments, separate the department names with a comma.</p>
+</div>
+<div class="paragraph">
+<p>List of departments:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Office of the Mayor</p>
+</li>
+<li>
+<p>City Administrator</p>
+</li>
+<li>
+<p>City Clerk</p>
+</li>
+<li>
+<p>City Auditor</p>
+</li>
+<li>
+<p>City Attorney</p>
+</li>
+<li>
+<p>Parks and Recreation</p>
+</li>
+<li>
+<p>Public Works Agency</p>
+</li>
+<li>
+<p>Department of Planning and Building</p>
+</li>
+<li>
+<p>Fire Department</p>
+</li>
+<li>
+<p>Library Services</p>
+</li>
+<li>
+<p>Office of Controller and Treasury</p>
+</li>
+<li>
+<p>Contracts and Compliance</p>
+</li>
+<li>
+<p>Information Technology (IT)</p>
+</li>
+<li>
+<p>Office of Neighborhood Investment</p>
+</li>
+<li>
+<p>Health and Human Services</p>
+</li>
+<li>
+<p>Human Resources</p>
+</li>
+<li>
+<p>Budget and Revenue - Revenue Division</p>
+</li>
+<li>
+<p>Council District 1 - Dan Kalb</p>
+</li>
+<li>
+<p>Council District 2 - Pat Kernighan</p>
+</li>
+<li>
+<p>Council District 3 - Lynette Gibson McElhaney</p>
+</li>
+<li>
+<p>Council District 4 - Libby Schaaf</p>
+</li>
+<li>
+<p>Council District 5 - Noel Gallo</p>
+</li>
+<li>
+<p>Council District 6 - Desley Brooks</p>
+</li>
+<li>
+<p>Council District 7 - Larry Reid</p>
+</li>
+<li>
+<p>Council At Large - Rebecca Kaplan</p>
+</li>
+<li>
+<p>Oakland Police Department</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -458,7 +635,7 @@ SQLALCHEMY_DATABASE_URI (your Heroku database, technically could use it locally 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 15:59:03 PDT
+Last updated 2013-10-24 18:11:29 PDT
 </div>
 </div>
 </body>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>API</title>
+<title>Models</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -426,12 +426,18 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </head>
 <body class="article">
 <div id="header">
-<h1>API</h1>
+<h1>Models</h1>
+<span id="author" class="author">Description of the tables in the database, as defined in `models.py`.</span><br>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_getting_a_request_object">Getting a request object</a></li>
-<li><a href="#_explanation_of_fields_in_the_request">Explanation of fields in the request:</a></li>
+<li><a href="#_user">User</a></li>
+<li><a href="#_request">Request</a></li>
+<li><a href="#_qa">QA</a></li>
+<li><a href="#_owner">Owner</a></li>
+<li><a href="#_subscriber">Subscriber</a></li>
+<li><a href="#_record">Record</a></li>
+<li><a href="#_note">Note</a></li>
 </ul>
 </div>
 </div>
@@ -444,105 +450,95 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_getting_a_request_object">Getting a request object</h2>
+<h2 id="_user">User</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>by ID</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>GET <a href="http://records.oaklandnet.com/api/request/1">http://records.oaklandnet.com/api/request/1</a></p>
+<p>User is a table in the public records database.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="json language-json"><span class="tok-p">{</span>
-    <span class="tok-nt">&quot;creator_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;current_owner&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:18.998278&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;department&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;extended&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;notes&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:55.982495&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Sent the resolution and a link online for more information.&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;owners&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:19.569128&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;She is the open government coordinator&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">2</span>
-        <span class="tok-p">},</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.755757&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">14</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed request.&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">},</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-13T21:56:13.163716&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">5</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;reason&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;He&#39;s the PRR liaison&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">19</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;qas&quot;</span><span class="tok-p">:</span> <span class="tok-p">[],</span>
-    <span class="tok-nt">&quot;records&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;access&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:02:23.329666&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;description&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Resolution 84208 CMS&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;doc_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;download_url&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;filename&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">3</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;url&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;http://oakland.legistar.com/LegislationDetail.aspx?ID=1283701&amp;GUID=32C352ED-A6F4-4933-AA84-0CD72419ABDA&amp;Options=ID|Text|&amp;Search=84208&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">6</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;status&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;Closed. Fulfilled&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;status_updated&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-25T00:03:04.932147&quot;</span><span class="tok-p">,</span>
-    <span class="tok-nt">&quot;subscribers&quot;</span><span class="tok-p">:</span> <span class="tok-p">[</span>
-        <span class="tok-p">{</span>
-            <span class="tok-nt">&quot;date_created&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;2013-06-12T16:59:20.203865&quot;</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;owner_id&quot;</span><span class="tok-p">:</span> <span class="tok-kc">null</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;request_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span><span class="tok-p">,</span>
-            <span class="tok-nt">&quot;user_id&quot;</span><span class="tok-p">:</span> <span class="tok-mi">1</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">],</span>
-    <span class="tok-nt">&quot;text&quot;</span><span class="tok-p">:</span> <span class="tok-s2">&quot;I need a copy of the resolution declaring February 23, 2013 Open Data Day in the City of Oakland.&quot;</span>
-<span class="tok-p">}</span>
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">User</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">))</span>
+	<span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">100</span><span class="tok-p">),</span> <span class="tok-n">unique</span><span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">255</span><span class="tok-p">))</span>
+	<span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span>
+	<span class="tok-n">contact_for</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># comma separated list</span>
+	<span class="tok-n">backup_for</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># comma separated list</span>
+	<span class="tok-k">def</span> <span class="tok-nf">is_authenticated</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-bp">True</span>
+	<span class="tok-k">def</span> <span class="tok-nf">is_active</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-bp">True</span>
+	<span class="tok-k">def</span> <span class="tok-nf">is_anonymous</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-bp">False</span>
+	<span class="tok-k">def</span> <span class="tok-nf">get_id</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-nb">unicode</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">)</span>
+	<span class="tok-k">def</span> <span class="tok-nf">set_password</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">generate_password_hash</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">)</span>
+	<span class="tok-k">def</span> <span class="tok-nf">check_password</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-n">check_password_hash</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">password</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-p">)</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">email</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">phone</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">password</span><span class="tok-o">=</span><span class="tok-bp">None</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">email</span> <span class="tok-o">=</span> <span class="tok-n">email</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">alias</span> <span class="tok-o">=</span> <span class="tok-n">alias</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">phone</span> <span class="tok-o">=</span> <span class="tok-n">phone</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">set_password</span><span class="tok-p">(</span><span class="tok-n">password</span><span class="tok-p">)</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">department</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;User </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span> <span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">email</span>
 </code></pre>
 </div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>by page number</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>GET <a href="http://records.oaklandnet.com/api/request?page=2">http://records.oaklandnet.com/api/request?page=2</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_explanation_of_fields_in_the_request">Explanation of fields in the request:</h2>
+<h2 id="_request">Request</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This is the actual public records request submitted by a member of the public. The table collects:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Date the request was submitted</p>
+</li>
+<li>
+<p>Has the due date been extended?</p>
+</li>
+<li>
+<p>List of question and answer units for a particular request</p>
+</li>
+<li>
+<p>When the status of a request is updated</p>
+</li>
+<li>
+<p>The actual request text</p>
+</li>
+<li>
+<p>The list of <em>subscribers</em> following a request text. <em>Subscribers</em> are members of the public who didn&#8217;t initially submit the request, but is interested in the results.</p>
+</li>
+<li>
+<p>All city staff members who ever were assigned to a request</p>
+</li>
+<li>
+<p>The Owner ID for the city staff who is listed as the point of contact for a request and is responsible for fulfilling the request.</p>
+</li>
+<li>
+<p>The list of records associated with a particular request.</p>
+</li>
+<li>
+<p>The list of notes associated with a particular request.</p>
+</li>
+<li>
+<p>The status of the request</p>
+</li>
+<li>
+<p>The creator of the request. City staff sometimes enter messages in the system on the requesters behalf.</p>
+</li>
+</ul>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Request</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
@@ -574,10 +570,192 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_qa">QA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a table of information on the Question and Answer block for a particular request:
+ [source,python]</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>class QA(db.Model):
+# A Q &amp; A block for a request
+	__tablename__ = 'qa'
+	id = db.Column(db.Integer, primary_key = True)
+	question = db.Column(db.String())
+	answer = db.Column(db.String())
+	request_id = db.Column(db.Integer, db.ForeignKey('request.id'))
+	owner_id = db.Column(db.Integer, db.ForeignKey('user.id')) # Actually just a user ID
+	subscriber_id = db.Column(db.Integer, db.ForeignKey('user.id')) # Actually just a user ID
+	date_created = db.Column(db.DateTime)
+	def __init__(self, request_id, question, owner_id = None):
+		self.question = question
+		self.request_id = request_id
+		self.date_created = datetime.now().isoformat()
+		self.owner_id = owner_id
+	def __repr__(self):
+		return "&lt;QA Q: %r A: %r&gt;" %(self.question, self.answer)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_owner">Owner</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a table of information about the city employee assigned to a particular request. This is the <em>owner</em> of the request or the <em>point of contact.</em> City staff may or may not upload records.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Owner</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+<span class="tok-c"># A member of city staff assigned to a particular request, that may or may not upload records towards that request.</span>
+	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;owner&#39;</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span><span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;request.id&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">reason</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># Reason they were assigned</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">reason</span><span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">reason</span> <span class="tok-o">=</span> <span class="tok-n">reason</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Owner </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span><span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_subscriber">Subscriber</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a table of information about an individual subscribed to the request. The subscriber may have not been the one to create the request. It could be someone simply interested in the outcome of particular request. The subscriber could potentially be a city employee.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Subscriber</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+<span class="tok-c"># A person subscribed to a request, who may or may not have created the request, and may or may not own a part of the request.</span>
+	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;subscriber&#39;</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;request.id&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">owner_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;owner.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># Not null if responsible for fulfilling a part of the request</span>
+ 	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">creator</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">):</span>
+ 		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Subscriber </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span><span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_record">Record</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Information about records are stored in a table. Records can be uploaded documents, links to another website, or instructions on how a requester can view or pick up copies of a document. The following information is collected in this table:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Date created</p>
+</li>
+<li>
+<p>The user who uploaded the record. Now only city staff members are allowed to upload records.</p>
+</li>
+<li>
+<p>The document ID. Currently using Scribd API to upload documents. In the future, the city&#8217;s content management system may be used.</p>
+</li>
+<li>
+<p>The request the record is associated with.</p>
+</li>
+<li>
+<p>A short description of the record.</p>
+</li>
+<li>
+<p>The original name of the file being uploaded.</p>
+</li>
+<li>
+<p>Where the records exists online</p>
+</li>
+<li>
+<p>Where the record can be downloaded online</p>
+</li>
+<li>
+<p>Instructions on where to access offline documents.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Record</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+<span class="tok-c"># A record that is attached to a particular request. A record can be online (uploaded document, link) or offline.</span>
+	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;record&#39;</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># The user who uploaded the record, right now only city staff can</span>
+	<span class="tok-n">doc_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">)</span> <span class="tok-c"># The document ID. Currently using Scribd API to upload documents.</span>
+	<span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;request.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># The request this record was uploaded for</span>
+	<span class="tok-n">description</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">400</span><span class="tok-p">))</span> <span class="tok-c"># A short description of what the record is.</span>
+	<span class="tok-n">filename</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">(</span><span class="tok-mi">400</span><span class="tok-p">))</span> <span class="tok-c"># The original name of the file being uploaded.</span>
+	<span class="tok-n">url</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># Where it exists on the internet.</span>
+	<span class="tok-n">download_url</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># Where it can be downloaded on the internet.</span>
+	<span class="tok-n">access</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span> <span class="tok-c"># How to access it. Probably only defined on offline docs for now.</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">url</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">filename</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">doc_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">description</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">access</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">doc_id</span> <span class="tok-o">=</span> <span class="tok-n">doc_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">description</span> <span class="tok-o">=</span> <span class="tok-n">description</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">url</span> <span class="tok-o">=</span> <span class="tok-n">url</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">filename</span> <span class="tok-o">=</span> <span class="tok-n">filename</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">access</span> <span class="tok-o">=</span> <span class="tok-n">access</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Record </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span> <span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">description</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_note">Note</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Creates a table of information on the notes posted by city staff and members of the public.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">class</span> <span class="tok-nc">Note</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Model</span><span class="tok-p">):</span>
+<span class="tok-c"># A note on a request.</span>
+	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;note&#39;</span>
+	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
+	<span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">String</span><span class="tok-p">())</span>
+	<span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;request.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># The request it belongs to.</span>
+	<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span> <span class="tok-c"># The user who wrote the note. Right now only city staff can.</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__init__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">,</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">text</span><span class="tok-p">,</span> <span class="tok-n">user_id</span><span class="tok-p">):</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span> <span class="tok-o">=</span> <span class="tok-n">text</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span>
+		<span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">now</span><span class="tok-p">()</span><span class="tok-o">.</span><span class="tok-n">isoformat</span><span class="tok-p">()</span>
+	<span class="tok-k">def</span> <span class="tok-nf">__repr__</span><span class="tok-p">(</span><span class="tok-bp">self</span><span class="tok-p">):</span>
+		<span class="tok-k">return</span> <span class="tok-s">&#39;&lt;Note </span><span class="tok-si">%r</span><span class="tok-s">&gt;&#39;</span> <span class="tok-o">%</span> <span class="tok-bp">self</span><span class="tok-o">.</span><span class="tok-n">text</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 14:49:33 PDT
+Last updated 2013-10-24 18:11:29 PDT
 </div>
 </div>
 </body>

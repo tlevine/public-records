@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DB Helpers</title>
+<title>Notifications</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -426,12 +426,21 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </head>
 <body class="article">
 <div id="header">
-<h1>DB Helpers</h1>
+<h1>Notifications</h1>
+<span id="author" class="author">Description of the functions in the `notifications.py` file. Sends out email notifications for the web application.</span><br>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_intro">Intro</a></li>
-<li><a href="#_adding_records">Adding Records</a></li>
+<li><a href="#_generate_prr_emails">generate_prr_emails</a></li>
+<li><a href="#_send_prr_email">send_prr_email</a></li>
+<li><a href="#_send_email">send_email</a></li>
+<li><a href="#_due_date">due_date</a></li>
+<li><a href="#_is_due_soon">is_due_soon</a></li>
+<li><a href="#_is_overdue">is_overdue</a></li>
+<li><a href="#_get_email_info">get_email_info</a></li>
+<li><a href="#_notify_due">notify_due</a></li>
+<li><a href="#_should_notify">should_notify</a></li>
+<li><a href="#_format_date">format_date</a></li>
 </ul>
 </div>
 </div>
@@ -444,217 +453,213 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 </div>
 <div class="sect1">
-<h2 id="_intro">Intro</h2>
+<h2 id="_generate_prr_emails">generate_prr_emails</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The functionality of the database can be found in the <code>db_helpers.py</code> file.</p>
-</div>
-<div class="paragraph">
-<p>This searches the database for an object via its class/type (defined in the
-<code>models.py</code> file) and ID and returns the object:</p>
+<p>The code below generates the emails for the public records request application. City staff receive notifications every time a request is submitted for them to fulfill, when a request is due in two days, when a request is overdue, and when a member of the public responds to one of their questions. Requesters get emails once their request is submitted, if a city employee has a question about their request, when a message or document is uploaded, and when the request is closed.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_obj</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Query the database for an object via its class/type (defined in models.py) and ID and return the object. &quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">obj_id</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-bp">None</span>
-	<span class="tok-c"># There has to be a better way of doing this</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Request&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Owner&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Note&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Note</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;QA&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">QA</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Subscriber</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Record&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Record</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
-</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This searches the database for all objects of a certain class/type (defined in
-the "models.py" file) and returns a queryset.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_objs</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Query the database for all objects of a certain class/type (defined in models.py) and return queryset. &quot;&quot;&quot;</span>
-	<span class="tok-c"># There has to be a better way of doing this</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Request&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Owner&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Note&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Note</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;QA&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">QA</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Subscriber</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Record&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Record</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
-
-<span class="tok-c">## @export &quot;get_avg_response_time&quot;</span>
-<span class="tok-k">def</span> <span class="tok-nf">get_avg_response_time</span><span class="tok-p">(</span><span class="tok-n">department</span><span class="tok-p">):</span>
-	<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-p">,</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">current_owner</span> <span class="tok-o">==</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">func</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">department</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-n">department</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()))</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
-	<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-bp">None</span>
-	<span class="tok-n">num_closed</span> <span class="tok-o">=</span> <span class="tok-mi">0</span>
-	<span class="tok-k">for</span> <span class="tok-n">request</span> <span class="tok-ow">in</span> <span class="tok-n">q</span><span class="tok-p">:</span>
-		<span class="tok-k">if</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status</span> <span class="tok-ow">and</span> <span class="tok-s">&#39;Closed&#39;</span> <span class="tok-ow">in</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status</span><span class="tok-p">:</span>
-			<span class="tok-k">if</span> <span class="tok-n">response_time</span><span class="tok-p">:</span>
-				<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-n">response_time</span> <span class="tok-o">+</span> <span class="tok-p">(</span><span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status_updated</span> <span class="tok-o">-</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">date_created</span><span class="tok-p">)</span>
-			<span class="tok-k">else</span><span class="tok-p">:</span>
-				<span class="tok-n">response_time</span> <span class="tok-o">=</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">status_updated</span> <span class="tok-o">-</span> <span class="tok-n">request</span><span class="tok-o">.</span><span class="tok-n">date_created</span>
-			<span class="tok-n">num_closed</span> <span class="tok-o">=</span> <span class="tok-n">num_closed</span> <span class="tok-o">+</span> <span class="tok-mi">1</span>
-	<span class="tok-k">if</span> <span class="tok-n">num_closed</span> <span class="tok-o">&gt;</span> <span class="tok-mi">0</span><span class="tok-p">:</span>
-		<span class="tok-n">avg</span> <span class="tok-o">=</span> <span class="tok-n">response_time</span><span class="tok-o">.</span><span class="tok-n">seconds</span> <span class="tok-o">/</span> <span class="tok-n">num_closed</span>
-		<span class="tok-k">return</span> <span class="tok-n">avg</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
-</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&lt;/p&gt;</p>
-</div>
-<div class="paragraph">
-<p>Retrieves a request associated with a particular owner:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_request_by_owner</span><span class="tok-p">(</span><span class="tok-n">owner_id</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Return the request that a particular owner belongs to &quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">owner_id</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-bp">None</span>
-	<span class="tok-k">return</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">current_owner</span> <span class="tok-o">=</span> <span class="tok-n">owner_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">first</span><span class="tok-p">()</span>
-</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A user can be associated with multiple owners. Gets owner by their user ID:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_owners_by_user_id</span><span class="tok-p">(</span><span class="tok-n">user_id</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Return the queryset of owners for a particular user. (A user can be associated with multiple owners).&quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">user_id</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-bp">None</span>
-	<span class="tok-k">return</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">filter_by</span><span class="tok-p">(</span><span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">)</span>
-</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Retrieves requests based on filters provided:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_requests_by_filters</span><span class="tok-p">(</span><span class="tok-n">filters_dict</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Return the queryset of requests for the filters provided. &quot;&quot;&quot;</span>
-	<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-p">)</span>
-	<span class="tok-k">if</span> <span class="tok-s">&#39;department&#39;</span> <span class="tok-ow">in</span> <span class="tok-n">filters_dict</span><span class="tok-p">:</span>
-		<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-p">,</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">current_owner</span> <span class="tok-o">==</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">func</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">department</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-n">filters_dict</span><span class="tok-p">[</span><span class="tok-s">&#39;department&#39;</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()))</span>
-		<span class="tok-k">if</span> <span class="tok-s">&#39;owner&#39;</span> <span class="tok-ow">in</span> <span class="tok-n">filters_dict</span><span class="tok-p">:</span>
-			<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">id</span> <span class="tok-o">==</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">request_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">==</span> <span class="tok-n">filters_dict</span><span class="tok-p">[</span><span class="tok-s">&#39;owner&#39;</span><span class="tok-p">])</span>
-	<span class="tok-k">else</span><span class="tok-p">:</span>
-		<span class="tok-k">if</span> <span class="tok-s">&#39;owner&#39;</span> <span class="tok-ow">in</span> <span class="tok-n">filters_dict</span><span class="tok-p">:</span>
-			<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-p">,</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">id</span> <span class="tok-o">==</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">request_id</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">user_id</span> <span class="tok-o">==</span> <span class="tok-n">filters_dict</span><span class="tok-p">[</span><span class="tok-s">&#39;owner&#39;</span><span class="tok-p">])</span>
-	<span class="tok-k">for</span> <span class="tok-n">attr</span><span class="tok-p">,</span> <span class="tok-n">value</span> <span class="tok-ow">in</span> <span class="tok-n">filters_dict</span><span class="tok-o">.</span><span class="tok-n">items</span><span class="tok-p">():</span>
-		<span class="tok-k">if</span> <span class="tok-n">attr</span> <span class="tok-o">==</span> <span class="tok-s">&#39;department&#39;</span> <span class="tok-ow">or</span> <span class="tok-n">attr</span> <span class="tok-o">==</span> <span class="tok-s">&#39;owner&#39;</span><span class="tok-p">:</span>
-			<span class="tok-k">continue</span>
-		<span class="tok-n">attr</span> <span class="tok-o">=</span> <span class="tok-n">attr</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span>
-		<span class="tok-k">if</span> <span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-n">value</span><span class="tok-p">)</span> <span class="tok-ow">is</span> <span class="tok-nb">str</span> <span class="tok-ow">or</span> <span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-n">value</span><span class="tok-p">)</span> <span class="tok-ow">is</span> <span class="tok-nb">unicode</span><span class="tok-p">:</span>
-			<span class="tok-n">value</span> <span class="tok-o">=</span> <span class="tok-n">value</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span>
-		<span class="tok-k">if</span> <span class="tok-n">attr</span> <span class="tok-o">==</span> <span class="tok-s">&#39;status&#39;</span> <span class="tok-ow">and</span> <span class="tok-n">value</span> <span class="tok-o">==</span> <span class="tok-s">&#39;open&#39;</span><span class="tok-p">:</span>
-			<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">not_</span><span class="tok-p">(</span><span class="tok-nb">getattr</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-p">,</span> <span class="tok-s">&#39;status&#39;</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-s">&#39;Closed&#39;</span><span class="tok-p">)))</span>
-		<span class="tok-k">elif</span> <span class="tok-n">attr</span> <span class="tok-o">==</span> <span class="tok-s">&#39;requester&#39;</span><span class="tok-p">:</span>
-			<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">Subscriber</span><span class="tok-p">,</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">subscribers</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">func</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">(</span><span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">alias</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-n">value</span><span class="tok-p">))</span>
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">generate_prr_emails</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">notification_type</span><span class="tok-p">,</span> <span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-n">app_url</span> <span class="tok-o">=</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;APPLICATION_URL&#39;</span><span class="tok-p">]</span>
+	<span class="tok-c"># Define the e-mail template:</span>
+	<span class="tok-n">template</span> <span class="tok-o">=</span> <span class="tok-s">&quot;generic_email.html&quot;</span>
+	<span class="tok-k">if</span> <span class="tok-n">notification_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Request made&quot;</span><span class="tok-p">:</span>
+		<span class="tok-n">template</span> <span class="tok-o">=</span> <span class="tok-s">&quot;new_request_email.html&quot;</span>
+	<span class="tok-c"># Get information on who to send the e-mail to and with what subject line based on the notification type:</span>
+	<span class="tok-n">email_info</span> <span class="tok-o">=</span> <span class="tok-n">get_email_info</span><span class="tok-p">(</span><span class="tok-n">notification_type</span><span class="tok-o">=</span><span class="tok-n">notification_type</span><span class="tok-p">)</span>
+	<span class="tok-n">email_subject</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Public Records Request </span><span class="tok-si">%s</span><span class="tok-s">: </span><span class="tok-si">%s</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span><span class="tok-p">(</span><span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">email_info</span><span class="tok-p">[</span><span class="tok-s">&quot;Subject&quot;</span><span class="tok-p">])</span>
+	<span class="tok-n">recipient_types</span> <span class="tok-o">=</span> <span class="tok-n">email_info</span><span class="tok-p">[</span><span class="tok-s">&quot;Recipients&quot;</span><span class="tok-p">]</span>
+	<span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-bp">True</span>
+	<span class="tok-k">for</span> <span class="tok-n">recipient_type</span> <span class="tok-ow">in</span> <span class="tok-n">recipient_types</span><span class="tok-p">:</span>
+		<span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-s">&quot;</span><span class="tok-si">%s</span><span class="tok-s">request/</span><span class="tok-si">%s</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span><span class="tok-p">(</span><span class="tok-n">app_url</span><span class="tok-p">,</span><span class="tok-n">request_id</span><span class="tok-p">)</span> <span class="tok-c"># The request URL</span>
+		<span class="tok-k">if</span> <span class="tok-s">&quot;Staff&quot;</span> <span class="tok-ow">in</span> <span class="tok-n">recipient_type</span><span class="tok-p">:</span>
+			<span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-s">&quot;</span><span class="tok-si">%s</span><span class="tok-s">city/request/</span><span class="tok-si">%s</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span><span class="tok-p">(</span><span class="tok-n">app_url</span><span class="tok-p">,</span><span class="tok-n">request_id</span><span class="tok-p">)</span>
+			<span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-bp">False</span> <span class="tok-c"># Gets excluded for city staff</span>
 		<span class="tok-k">else</span><span class="tok-p">:</span>
-			<span class="tok-k">try</span><span class="tok-p">:</span>
-				<span class="tok-n">request_attr</span> <span class="tok-o">=</span> <span class="tok-nb">getattr</span><span class="tok-p">(</span><span class="tok-n">Request</span><span class="tok-p">,</span> <span class="tok-n">attr</span><span class="tok-p">)</span>
-			<span class="tok-k">except</span> <span class="tok-ne">AttributeError</span><span class="tok-p">:</span>
-				<span class="tok-k">continue</span>
+			<span class="tok-k">if</span> <span class="tok-n">notification_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Request closed&quot;</span><span class="tok-p">:</span>
+				<span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-s">&quot;</span><span class="tok-si">%s</span><span class="tok-s">feedback/request/</span><span class="tok-si">%s</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span><span class="tok-p">(</span><span class="tok-n">app_url</span><span class="tok-p">,</span><span class="tok-n">request_id</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">recipient_type</span> <span class="tok-ow">in</span> <span class="tok-p">[</span><span class="tok-s">&quot;Staff owner&quot;</span><span class="tok-p">,</span><span class="tok-s">&quot;Requester&quot;</span><span class="tok-p">,</span><span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">,</span><span class="tok-s">&quot;Staff participant&quot;</span><span class="tok-p">]:</span>
+			<span class="tok-k">if</span> <span class="tok-n">user_id</span><span class="tok-p">:</span>
+				<span class="tok-n">recipient</span> <span class="tok-o">=</span> <span class="tok-n">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;email&quot;</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">)</span>
+				<span class="tok-k">if</span> <span class="tok-n">recipient</span><span class="tok-p">:</span>
+					<span class="tok-n">send_prr_email</span><span class="tok-p">(</span><span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-n">page</span><span class="tok-p">,</span> <span class="tok-n">recipients</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-n">recipient</span><span class="tok-p">],</span> <span class="tok-n">subject</span> <span class="tok-o">=</span> <span class="tok-n">email_subject</span><span class="tok-p">,</span> <span class="tok-n">template</span> <span class="tok-o">=</span> <span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-n">include_unsubscribe_link</span><span class="tok-p">)</span>
 			<span class="tok-k">else</span><span class="tok-p">:</span>
-				<span class="tok-n">q</span> <span class="tok-o">=</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">filter</span><span class="tok-p">(</span><span class="tok-n">request_attr</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">like</span><span class="tok-p">(</span><span class="tok-s">&quot;</span><span class="tok-si">%%%s%%</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-n">value</span><span class="tok-p">)</span>
-	<span class="tok-k">return</span> <span class="tok-n">q</span><span class="tok-o">.</span><span class="tok-n">all</span><span class="tok-p">()</span>
+				<span class="tok-k">print</span> <span class="tok-s">&quot;Can&#39;t send an e-mail out if no user exists.&quot;</span>
+		<span class="tok-k">elif</span> <span class="tok-n">recipient_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Subscribers&quot;</span><span class="tok-p">:</span>
+			<span class="tok-n">subscribers</span> <span class="tok-o">=</span> <span class="tok-n">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;subscribers&quot;</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Request&quot;</span><span class="tok-p">)</span>
+			<span class="tok-k">for</span> <span class="tok-n">subscriber</span> <span class="tok-ow">in</span> <span class="tok-n">subscribers</span><span class="tok-p">:</span>
+				<span class="tok-n">recipient</span> <span class="tok-o">=</span> <span class="tok-n">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;email&quot;</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-n">subscriber</span><span class="tok-o">.</span><span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">)</span>
+				<span class="tok-k">if</span> <span class="tok-n">recipient</span><span class="tok-p">:</span>
+					<span class="tok-n">send_prr_email</span><span class="tok-p">(</span><span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-n">page</span><span class="tok-p">,</span> <span class="tok-n">recipients</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-n">recipient</span><span class="tok-p">],</span> <span class="tok-n">subject</span> <span class="tok-o">=</span> <span class="tok-n">email_subject</span><span class="tok-p">,</span> <span class="tok-n">template</span> <span class="tok-o">=</span> <span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-n">include_unsubscribe_link</span><span class="tok-p">)</span> <span class="tok-c"># Each subscriber needs to get a separate e-mail.</span>
+		<span class="tok-k">elif</span> <span class="tok-n">recipient_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Staff participants&quot;</span><span class="tok-p">:</span>
+			<span class="tok-n">recipients</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+			<span class="tok-n">participants</span> <span class="tok-o">=</span> <span class="tok-n">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;owners&quot;</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-n">request_id</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-s">&quot;Request&quot;</span><span class="tok-p">)</span>
+			<span class="tok-k">for</span> <span class="tok-n">participant</span> <span class="tok-ow">in</span> <span class="tok-n">participants</span><span class="tok-p">:</span>
+				<span class="tok-n">recipient</span> <span class="tok-o">=</span> <span class="tok-n">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;email&quot;</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-n">participant</span><span class="tok-o">.</span><span class="tok-n">user_id</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">)</span>
+				<span class="tok-k">if</span> <span class="tok-n">recipient</span><span class="tok-p">:</span>
+					<span class="tok-n">recipients</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">recipient</span><span class="tok-p">)</span>
+			<span class="tok-n">send_prr_email</span><span class="tok-p">(</span><span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-n">page</span><span class="tok-p">,</span> <span class="tok-n">recipients</span> <span class="tok-o">=</span> <span class="tok-n">recipients</span><span class="tok-p">,</span> <span class="tok-n">subject</span> <span class="tok-o">=</span> <span class="tok-n">email_subject</span><span class="tok-p">,</span> <span class="tok-n">template</span> <span class="tok-o">=</span> <span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-n">include_unsubscribe_link</span><span class="tok-p">,</span> <span class="tok-n">cc_everyone</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">)</span>
+		<span class="tok-k">else</span><span class="tok-p">:</span>
+			<span class="tok-k">print</span> <span class="tok-n">recipient_type</span>
+			<span class="tok-k">print</span> <span class="tok-s">&quot;Not a valid recipient type&quot;</span>
+</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some key details about the emails are listed below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Each request is assigned a unique ID. The unique ID is displayed in the subject line to allow the recipient of the emails to determine which request is associated with that particular notification</p>
+</li>
+<li>
+<p>The unsubscribe link is not included in city employee emails. This is to prevent them from accidentally unsubscribing from the email notifications.</p>
+</li>
+<li>
+<p>Four types of people can receive email notifications: the original requester; the <em>subscriber</em> or interested member of the public who wants to know when a particular records request is fulfilled; the staff owner (also known as a <em>point of contact</em>) or staff member responsible for fulfilling the records request; and the staff participants (also known as a <em>helper</em>) or the city employees who help the owner fulfill a request.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_send_prr_email">send_prr_email</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sends emails to city employees or city staff members after they are generated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">send_prr_email</span><span class="tok-p">(</span><span class="tok-n">page</span><span class="tok-p">,</span> <span class="tok-n">recipients</span><span class="tok-p">,</span> <span class="tok-n">subject</span><span class="tok-p">,</span> <span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">,</span> <span class="tok-n">cc_everyone</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">,</span> <span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">recipients</span><span class="tok-p">:</span>
+		<span class="tok-k">if</span> <span class="tok-n">send_emails</span><span class="tok-p">:</span>
+			<span class="tok-k">try</span><span class="tok-p">:</span>
+				<span class="tok-n">send_email</span><span class="tok-p">(</span><span class="tok-n">body</span> <span class="tok-o">=</span> <span class="tok-n">render_template</span><span class="tok-p">(</span><span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">logo_url</span> <span class="tok-o">=</span> <span class="tok-s">&quot;</span><span class="tok-si">%s</span><span class="tok-s">static/images/CityTree_logo_green.jpg&quot;</span> <span class="tok-o">%</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;APPLICATION_URL&#39;</span><span class="tok-p">]</span> <span class="tok-p">),</span> <span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-n">page</span><span class="tok-p">,</span> <span class="tok-n">password</span> <span class="tok-o">=</span> <span class="tok-n">password</span><span class="tok-p">),</span> <span class="tok-n">recipients</span> <span class="tok-o">=</span> <span class="tok-n">recipients</span><span class="tok-p">,</span> <span class="tok-n">subject</span> <span class="tok-o">=</span> <span class="tok-n">subject</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-n">include_unsubscribe_link</span><span class="tok-p">,</span> <span class="tok-n">cc_everyone</span> <span class="tok-o">=</span> <span class="tok-n">cc_everyone</span><span class="tok-p">)</span>
+			<span class="tok-k">except</span><span class="tok-p">:</span>
+				<span class="tok-k">print</span> <span class="tok-s">&quot;E-mail was not sent.&quot;</span>
+		<span class="tok-k">else</span><span class="tok-p">:</span>
+			<span class="tok-k">print</span> <span class="tok-s">&quot;</span><span class="tok-si">%s</span><span class="tok-s"> to </span><span class="tok-si">%s</span><span class="tok-s"> with subject </span><span class="tok-si">%s</span><span class="tok-s">&quot;</span> <span class="tok-o">%</span> <span class="tok-p">(</span><span class="tok-n">render_template</span><span class="tok-p">(</span><span class="tok-n">template</span><span class="tok-p">,</span> <span class="tok-n">page</span> <span class="tok-o">=</span> <span class="tok-n">page</span><span class="tok-p">),</span> <span class="tok-n">recipients</span><span class="tok-p">,</span> <span class="tok-n">subject</span><span class="tok-p">)</span>
 </code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_adding_records">Adding Records</h2>
+<h2 id="_send_email">send_email</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Adds a particular object to the database:</p>
+<p>Sendgrid wrapper to send email</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">put_obj</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Add and commit the object to the database. Return true if successful. &quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj</span><span class="tok-p">:</span>
-		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">)</span>
-		<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
-		<span class="tok-k">return</span> <span class="tok-bp">True</span>
-	<span class="tok-k">return</span> <span class="tok-bp">False</span>
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">send_email</span><span class="tok-p">(</span><span class="tok-n">body</span><span class="tok-p">,</span> <span class="tok-n">recipients</span><span class="tok-p">,</span> <span class="tok-n">subject</span><span class="tok-p">,</span> <span class="tok-n">include_unsubscribe_link</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">,</span> <span class="tok-n">cc_everyone</span> <span class="tok-o">=</span> <span class="tok-bp">False</span><span class="tok-p">):</span>
+	<span class="tok-n">mail</span> <span class="tok-o">=</span> <span class="tok-n">sendgrid</span><span class="tok-o">.</span><span class="tok-n">Sendgrid</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;MAIL_USERNAME&#39;</span><span class="tok-p">],</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;MAIL_PASSWORD&#39;</span><span class="tok-p">],</span> <span class="tok-n">secure</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">sender</span> <span class="tok-o">=</span> <span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">config</span><span class="tok-p">[</span><span class="tok-s">&#39;DEFAULT_MAIL_SENDER&#39;</span><span class="tok-p">]</span>
+	<span class="tok-n">plaintext</span> <span class="tok-o">=</span> <span class="tok-s">&quot;&quot;</span>
+	<span class="tok-n">html</span> <span class="tok-o">=</span> <span class="tok-n">body</span>
+	<span class="tok-n">message</span> <span class="tok-o">=</span> <span class="tok-n">sendgrid</span><span class="tok-o">.</span><span class="tok-n">Message</span><span class="tok-p">(</span><span class="tok-n">sender</span><span class="tok-p">,</span> <span class="tok-n">subject</span><span class="tok-p">,</span> <span class="tok-n">plaintext</span><span class="tok-p">,</span> <span class="tok-n">html</span><span class="tok-p">)</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">include_unsubscribe_link</span><span class="tok-p">:</span>
+		<span class="tok-n">message</span><span class="tok-o">.</span><span class="tok-n">add_filter_setting</span><span class="tok-p">(</span><span class="tok-s">&quot;subscriptiontrack&quot;</span><span class="tok-p">,</span> <span class="tok-s">&quot;enable&quot;</span><span class="tok-p">,</span> <span class="tok-mi">0</span><span class="tok-p">)</span>
+	<span class="tok-k">if</span> <span class="tok-n">cc_everyone</span><span class="tok-p">:</span> <span class="tok-c"># Not being used for now</span>
+		<span class="tok-n">message</span><span class="tok-o">.</span><span class="tok-n">add_to</span><span class="tok-p">(</span><span class="tok-n">recipients</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">])</span>
+		<span class="tok-k">for</span> <span class="tok-n">recipient</span> <span class="tok-ow">in</span> <span class="tok-n">recipients</span><span class="tok-p">:</span>
+			<span class="tok-k">if</span> <span class="tok-n">should_notify</span><span class="tok-p">(</span><span class="tok-n">recipient</span><span class="tok-p">):</span>
+				<span class="tok-n">message</span><span class="tok-o">.</span><span class="tok-n">add_cc</span><span class="tok-p">(</span><span class="tok-n">recipient</span><span class="tok-p">)</span>
+	<span class="tok-k">else</span><span class="tok-p">:</span>
+		<span class="tok-k">for</span> <span class="tok-n">recipient</span> <span class="tok-ow">in</span> <span class="tok-n">recipients</span><span class="tok-p">:</span>
+			<span class="tok-k">if</span> <span class="tok-n">should_notify</span><span class="tok-p">(</span><span class="tok-n">recipient</span><span class="tok-p">):</span>
+				<span class="tok-n">message</span><span class="tok-o">.</span><span class="tok-n">add_to</span><span class="tok-p">(</span><span class="tok-n">recipient</span><span class="tok-p">)</span>
+	<span class="tok-n">message</span><span class="tok-o">.</span><span class="tok-n">add_bcc</span><span class="tok-p">(</span><span class="tok-n">sender</span><span class="tok-p">)</span>
+	<span class="tok-n">mail</span><span class="tok-o">.</span><span class="tok-n">web</span><span class="tok-o">.</span><span class="tok-n">send</span><span class="tok-p">(</span><span class="tok-n">message</span><span class="tok-p">)</span>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_due_date">due_date</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Obtain the object its ID and type, if the object is not provided, and updates
-the specified attribute for that object. If the command is successful, returns
-the word <em>true.</em>:</p>
+<p>Calculates the due date. The California Public Records Act gives city employees ten days to respond to a request. The request is due ten calendar days after it is submitted. When a request is extended, a city employee only gets 14 additional days to respond.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">update_obj</span><span class="tok-p">(</span><span class="tok-n">attribute</span><span class="tok-p">,</span> <span class="tok-n">val</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Obtain the object by obj_id and obj_type if obj is not provided, and update the specified attribute for that object. Return true if successful. &quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj_id</span> <span class="tok-ow">and</span> <span class="tok-n">obj_type</span><span class="tok-p">:</span>
-		<span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">get_obj</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj</span><span class="tok-p">:</span>
-		<span class="tok-k">try</span><span class="tok-p">:</span>
-			<span class="tok-nb">setattr</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">,</span> <span class="tok-n">attribute</span><span class="tok-p">,</span> <span class="tok-n">val</span><span class="tok-p">)</span>
-			<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">add</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">)</span>
-			<span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">session</span><span class="tok-o">.</span><span class="tok-n">commit</span><span class="tok-p">()</span>
-			<span class="tok-k">return</span> <span class="tok-bp">True</span>
-		<span class="tok-k">except</span><span class="tok-p">:</span>
-			<span class="tok-k">return</span> <span class="tok-bp">False</span>
-	<span class="tok-k">return</span> <span class="tok-bp">False</span>
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">due_date</span><span class="tok-p">(</span><span class="tok-n">date_obj</span><span class="tok-p">,</span> <span class="tok-n">extended</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">format</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">):</span>
+	<span class="tok-n">days_to_fulfill</span> <span class="tok-o">=</span> <span class="tok-mi">10</span>
+	<span class="tok-k">if</span> <span class="tok-n">extended</span> <span class="tok-o">==</span> <span class="tok-bp">True</span><span class="tok-p">:</span>
+		<span class="tok-n">days_to_fulfill</span> <span class="tok-o">=</span> <span class="tok-n">days_to_fulfill</span> <span class="tok-o">+</span> <span class="tok-mi">14</span>
+	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">date_obj</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-bp">None</span>
+	<span class="tok-k">if</span> <span class="tok-nb">type</span><span class="tok-p">(</span><span class="tok-n">date_obj</span><span class="tok-p">)</span> <span class="tok-ow">is</span> <span class="tok-ow">not</span> <span class="tok-n">datetime</span><span class="tok-p">:</span>
+		<span class="tok-n">date_obj</span> <span class="tok-o">=</span> <span class="tok-n">datetime</span><span class="tok-o">.</span><span class="tok-n">strptime</span><span class="tok-p">(</span><span class="tok-n">date_obj</span><span class="tok-p">,</span> <span class="tok-s">&quot;%Y-%m-</span><span class="tok-si">%d</span><span class="tok-s">T%H:%M:%S.</span><span class="tok-si">%f</span><span class="tok-s">&quot;</span><span class="tok-p">)</span>
+	<span class="tok-n">due_date</span> <span class="tok-o">=</span> <span class="tok-n">date_obj</span> <span class="tok-o">+</span> <span class="tok-n">timedelta</span><span class="tok-p">(</span><span class="tok-n">days</span> <span class="tok-o">=</span> <span class="tok-n">days_to_fulfill</span><span class="tok-p">)</span>
+	<span class="tok-k">if</span> <span class="tok-n">format</span><span class="tok-p">:</span>
+		<span class="tok-k">return</span> <span class="tok-n">format_date</span><span class="tok-p">(</span><span class="tok-n">due_date</span><span class="tok-o">.</span><span class="tok-n">date</span><span class="tok-p">())</span>
+	<span class="tok-k">return</span> <span class="tok-n">due_date</span><span class="tok-o">.</span><span class="tok-n">date</span><span class="tok-p">()</span>
 </code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_is_due_soon">is_due_soon</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Gets an object by its ID and type to return the specified attribute for that
-object, if the object is not provided:</p>
+<p>An email is sent to the staff owner and participants two days before a request is due. This calculates the date that email is sent out:
+{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>is_due_soon</em>] }}</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_attribute</span><span class="tok-p">(</span><span class="tok-n">attribute</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">obj_type</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">,</span> <span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-bp">None</span><span class="tok-p">):</span>
-	<span class="tok-sd">&quot;&quot;&quot; Obtain the object by obj_id and obj_type if obj is not provided, and return the specified attribute for that object. &quot;&quot;&quot;</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj_id</span> <span class="tok-ow">and</span> <span class="tok-n">obj_type</span><span class="tok-p">:</span>
-		<span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">get_obj</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">,</span> <span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj</span><span class="tok-p">:</span>
-		<span class="tok-k">try</span><span class="tok-p">:</span>
-			<span class="tok-k">return</span> <span class="tok-nb">getattr</span><span class="tok-p">(</span><span class="tok-n">obj</span><span class="tok-p">,</span> <span class="tok-n">attribute</span><span class="tok-p">)</span>
-		<span class="tok-k">except</span><span class="tok-p">:</span>
-			<span class="tok-k">return</span> <span class="tok-bp">None</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
-</code></pre>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_is_overdue">is_overdue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An email is sent to the staff owner and participants when a request is due. This calculates the date that email is sent out:
+{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>is_overdue</em>] }}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_email_info">get_email_info</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This pulls information about email notifications from the <em>Emails.json</em> file. The .json file contains each email notification&#8217;s subject lines and who should receive the email.
+{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>get_email_info</em>] }}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_notify_due">notify_due</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before email notifications are sent, the system must first check to see if the request is open or closed. Notifications are only sent about open requests. Then the request is checked to determine if it is either due in two days or if it&#8217;s past due. Currently there is not way to pass the generic email template outside of the application context. For now, hardcoding the body.
+{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>notify_due</em>] }}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_should_notify">should_notify</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some city employees may not want to be sent email notifications. If they shouldn&#8217;t receive emails, add the email addresses to the <em>do_not_email.json</em> file. This line of code prevents the people in that file from being sent emails:
+{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>should_notify</em>] }}</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_format_date">format_date</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>{ d[<em>/public_records_portal/notifications.py|idio|asciisyn</em>][<em>format_date</em>] }}</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 13:54:54 PDT
+Last updated 2013-10-24 18:11:24 PDT
 </div>
 </div>
 </body>

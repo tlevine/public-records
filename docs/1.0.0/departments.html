@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="generator" content="Asciidoctor 0.1.4">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RecordTrac Documentation</title>
+<title>Departments</title>
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary { display: block; }
@@ -360,146 +360,218 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 </style>
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+<style>
+.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #ffffff; }
+.highlight .tok-c { color: #888888 } /* Comment */
+.highlight .tok-err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .tok-k { color: #008800; font-weight: bold } /* Keyword */
+.highlight .tok-cm { color: #888888 } /* Comment.Multiline */
+.highlight .tok-cp { color: #cc0000; font-weight: bold } /* Comment.Preproc */
+.highlight .tok-c1 { color: #888888 } /* Comment.Single */
+.highlight .tok-cs { color: #cc0000; font-weight: bold; background-color: #fff0f0 } /* Comment.Special */
+.highlight .tok-gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .tok-ge { font-style: italic } /* Generic.Emph */
+.highlight .tok-gr { color: #aa0000 } /* Generic.Error */
+.highlight .tok-gh { color: #333333 } /* Generic.Heading */
+.highlight .tok-gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .tok-go { color: #888888 } /* Generic.Output */
+.highlight .tok-gp { color: #555555 } /* Generic.Prompt */
+.highlight .tok-gs { font-weight: bold } /* Generic.Strong */
+.highlight .tok-gu { color: #666666 } /* Generic.Subheading */
+.highlight .tok-gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .tok-kc { color: #008800; font-weight: bold } /* Keyword.Constant */
+.highlight .tok-kd { color: #008800; font-weight: bold } /* Keyword.Declaration */
+.highlight .tok-kn { color: #008800; font-weight: bold } /* Keyword.Namespace */
+.highlight .tok-kp { color: #008800 } /* Keyword.Pseudo */
+.highlight .tok-kr { color: #008800; font-weight: bold } /* Keyword.Reserved */
+.highlight .tok-kt { color: #888888; font-weight: bold } /* Keyword.Type */
+.highlight .tok-m { color: #0000DD; font-weight: bold } /* Literal.Number */
+.highlight .tok-s { color: #dd2200; background-color: #fff0f0 } /* Literal.String */
+.highlight .tok-na { color: #336699 } /* Name.Attribute */
+.highlight .tok-nb { color: #003388 } /* Name.Builtin */
+.highlight .tok-nc { color: #bb0066; font-weight: bold } /* Name.Class */
+.highlight .tok-no { color: #003366; font-weight: bold } /* Name.Constant */
+.highlight .tok-nd { color: #555555 } /* Name.Decorator */
+.highlight .tok-ne { color: #bb0066; font-weight: bold } /* Name.Exception */
+.highlight .tok-nf { color: #0066bb; font-weight: bold } /* Name.Function */
+.highlight .tok-nl { color: #336699; font-style: italic } /* Name.Label */
+.highlight .tok-nn { color: #bb0066; font-weight: bold } /* Name.Namespace */
+.highlight .tok-py { color: #336699; font-weight: bold } /* Name.Property */
+.highlight .tok-nt { color: #bb0066; font-weight: bold } /* Name.Tag */
+.highlight .tok-nv { color: #336699 } /* Name.Variable */
+.highlight .tok-ow { color: #008800 } /* Operator.Word */
+.highlight .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .tok-mf { color: #0000DD; font-weight: bold } /* Literal.Number.Float */
+.highlight .tok-mh { color: #0000DD; font-weight: bold } /* Literal.Number.Hex */
+.highlight .tok-mi { color: #0000DD; font-weight: bold } /* Literal.Number.Integer */
+.highlight .tok-mo { color: #0000DD; font-weight: bold } /* Literal.Number.Oct */
+.highlight .tok-sb { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Backtick */
+.highlight .tok-sc { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Char */
+.highlight .tok-sd { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Doc */
+.highlight .tok-s2 { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Double */
+.highlight .tok-se { color: #0044dd; background-color: #fff0f0 } /* Literal.String.Escape */
+.highlight .tok-sh { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Heredoc */
+.highlight .tok-si { color: #3333bb; background-color: #fff0f0 } /* Literal.String.Interpol */
+.highlight .tok-sx { color: #22bb22; background-color: #f0fff0 } /* Literal.String.Other */
+.highlight .tok-sr { color: #008800; background-color: #fff0ff } /* Literal.String.Regex */
+.highlight .tok-s1 { color: #dd2200; background-color: #fff0f0 } /* Literal.String.Single */
+.highlight .tok-ss { color: #aa6600; background-color: #fff0f0 } /* Literal.String.Symbol */
+.highlight .tok-bp { color: #003388 } /* Name.Builtin.Pseudo */
+.highlight .tok-vc { color: #336699 } /* Name.Variable.Class */
+.highlight .tok-vg { color: #dd7700 } /* Name.Variable.Global */
+.highlight .tok-vi { color: #3333bb } /* Name.Variable.Instance */
+.highlight .tok-il { color: #0000DD; font-weight: bold } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article">
 <div id="header">
-<h1>RecordTrac Documentation</h1>
+<h1>Departments</h1>
+<span id="author" class="author">Description of the functions in the `departments.py` file. Generally contains the code related to a municipality's departments or agencies.</span><br>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_create_doctypes">create_doctypes</a></li>
+<li><a href="#_create_list_depts">create_list_depts</a></li>
+<li><a href="#_get_dept_backup">get_dept_backup</a></li>
+<li><a href="#_get_dept">get_dept</a></li>
+<li><a href="#_populate_users_with_departments">populate_users_with_departments</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_welcome">Welcome</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This is the home page for documentation for RecordTrac app.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="icon-note" title="Note"></i>
-</td>
-<td class="content">
-For help contact oakland|@|codeforamerica.org
-</td>
-</tr>
-</table>
+<p><a href="index.html">back to index page</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_what_is_recordtrac">What is RecordTrac?</h2>
+<h2 id="_create_doctypes">create_doctypes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Understand what is RecordTrac and what motivated the 2013 Code for America fellows to build it. You can also find links to research about the public records request process in Oakland.</p>
+<p>Creates a file called "doctypes.json" from "departments.json." We use "doctypes.json" to map document types to the department which can fulfill it in the typeahead feature on the new request page.</p>
 </div>
-<div class="paragraph">
-<p><a href="about.html">About</a></p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_doctypes</span><span class="tok-p">():</span>
+	<span class="tok-sd">&quot;&quot;&quot; # Creates a file called doctypes.json from departments.json that is used by typeahead to map document types to the department which can fulfill it. &quot;&quot;&quot;</span>
+	<span class="tok-n">depts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+	<span class="tok-n">depts_json</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/departments.json&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">json_data</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-n">depts_json</span><span class="tok-p">)</span>
+	<span class="tok-k">for</span> <span class="tok-n">department</span> <span class="tok-ow">in</span> <span class="tok-n">json_data</span><span class="tok-p">:</span>
+		<span class="tok-k">if</span> <span class="tok-s">&quot;Council&quot;</span> <span class="tok-ow">in</span> <span class="tok-n">department</span><span class="tok-p">:</span>
+			<span class="tok-n">document_types</span> <span class="tok-o">=</span> <span class="tok-p">[</span><span class="tok-s">&#39;Council records&#39;</span><span class="tok-p">]</span>
+		<span class="tok-k">else</span><span class="tok-p">:</span>
+			<span class="tok-n">document_types</span> <span class="tok-o">=</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">department</span><span class="tok-p">][</span><span class="tok-s">&quot;Document Types&quot;</span><span class="tok-p">]</span>
+		<span class="tok-k">for</span> <span class="tok-n">document_type</span> <span class="tok-ow">in</span> <span class="tok-n">document_types</span><span class="tok-p">:</span>
+			<span class="tok-n">line</span> <span class="tok-o">=</span> <span class="tok-p">{}</span>
+			<span class="tok-n">line</span><span class="tok-p">[</span><span class="tok-s">&#39;DEPARTMENT&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-n">department</span>
+			<span class="tok-n">line</span><span class="tok-p">[</span><span class="tok-s">&#39;DOC_TYPE&#39;</span><span class="tok-p">]</span> <span class="tok-o">=</span> <span class="tok-n">document_type</span>
+			<span class="tok-n">depts</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">)</span>
+	<span class="tok-k">with</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/doctypes.json&#39;</span><span class="tok-p">),</span> <span class="tok-s">&#39;w&#39;</span><span class="tok-p">)</span> <span class="tok-k">as</span> <span class="tok-n">outfile</span><span class="tok-p">:</span>
+  		<span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dump</span><span class="tok-p">(</span><span class="tok-n">depts</span><span class="tok-p">,</span> <span class="tok-n">outfile</span><span class="tok-p">)</span>
+</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_a_em_requester_em_uses_recordtrac">How a <em>requester</em> uses RecordTrac</h2>
+<h2 id="_create_list_depts">create_list_depts</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Creates an array of of the departments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">create_list_depts</span><span class="tok-p">():</span>
+	<span class="tok-n">depts</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+	<span class="tok-n">depts_json</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/departments.json&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">json_data</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-n">depts_json</span><span class="tok-p">)</span>
+	<span class="tok-k">for</span> <span class="tok-n">department</span> <span class="tok-ow">in</span> <span class="tok-n">json_data</span><span class="tok-p">:</span>
+		<span class="tok-n">depts</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">department</span><span class="tok-p">)</span>
+  	<span class="tok-k">with</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/list_of_departments.json&#39;</span><span class="tok-p">),</span> <span class="tok-s">&#39;w&#39;</span><span class="tok-p">)</span> <span class="tok-k">as</span> <span class="tok-n">outfile</span><span class="tok-p">:</span>
+  		<span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">dump</span><span class="tok-p">(</span><span class="tok-n">depts</span><span class="tok-p">,</span> <span class="tok-n">outfile</span><span class="tok-p">)</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_dept_backup">get_dept_backup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Retrieves the backup Public Records Request (PRR) liaison for a particular department. This person is responsible for fulfilling a public records request when a PRR liaison is not available.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_dept_backup</span><span class="tok-p">(</span><span class="tok-n">dept_contact</span><span class="tok-p">):</span>
+	<span class="tok-n">depts_json</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/departments.json&#39;</span><span class="tok-p">))</span>
+	<span class="tok-n">json_data</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-n">depts_json</span><span class="tok-p">)</span>
+	<span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">json_data</span><span class="tok-p">:</span>
+		<span class="tok-k">if</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">line</span><span class="tok-p">][</span><span class="tok-s">&quot;Contact&quot;</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span> <span class="tok-o">==</span> <span class="tok-n">dept_contact</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">():</span>
+			<span class="tok-k">return</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">line</span><span class="tok-p">][</span><span class="tok-s">&quot;Backup&quot;</span><span class="tok-p">]</span>
+	<span class="tok-k">return</span> <span class="tok-bp">None</span>
+</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_get_dept">get_dept</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Given a user object (defined in the <em>models.py</em> file), this checks to see if the user&#8217;s email is in the "departments.json" file. If the user is not in the <em>departments.json</em> file</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">get_dept</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">):</span>
+	<span class="tok-k">if</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">email</span><span class="tok-p">:</span>
+		<span class="tok-n">depts_json</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/departments.json&#39;</span><span class="tok-p">))</span>
+		<span class="tok-n">json_data</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-n">depts_json</span><span class="tok-p">)</span>
+		<span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">json_data</span><span class="tok-p">:</span>
+			<span class="tok-k">if</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">line</span><span class="tok-p">][</span><span class="tok-s">&quot;Contact&quot;</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span> <span class="tok-o">==</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">email</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">():</span>
+				<span class="tok-k">return</span> <span class="tok-n">line</span>
+	<span class="tok-k">return</span> <span class="tok-bp">None</span>
 
-</div>
-</div>
-<div class="sect1">
-<h2 id="_how_a_em_responder_em_uses_recordtrac">How a <em>responder</em> uses RecordTrac</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_how_recordtrac_is_built">How RecordTrac is Built</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Learn about the technical details of implementation so you can see what&#8217;s involved.</p>
-</div>
-<div class="paragraph">
-<p>RecordTrac is primary a Python application built on a backend Flask framework and a frontend Bootstrap framework.</p>
-</div>
-<div class="sect2">
-<h3 id="_platform_pieces">Platform pieces</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://flask.pocoo.org/">http://flask.pocoo.org/</a> [Flask 0.10]</p>
-</li>
-<li>
-<p><a href="http://getbootstrap.com/2.3.2/">http://getbootstrap.com/2.3.2/</a> [Bootstrap 2.3.2]</p>
-</li>
-<li>
-<p><a href="http://www.postgresapp.com/">http://www.postgresapp.com/</a> [Postgres 9.3.0]</p>
-</li>
-<li>
-<p><a href="http://www.python.org/getit/">http://www.python.org/getit/</a> [Python 2.7.5]
-=== Plugins</p>
-</li>
-<li>
-<p><a href="http://fortawesome.github.io/Font-Awesome/">http://fortawesome.github.io/Font-Awesome/</a> [Font Awesome 3.2.1]</p>
-</li>
-<li>
-<p><a href="http://www.datatables.net/">http://www.datatables.net/</a> [DataTables 1.9.4]
-=== Service dependencies
-=== Feature backlog
-Issues and feature backlog are tracked through <a href="https://github.com/codeforamerica/public-records">GitHub issues</a>.</p>
-</li>
-</ul>
+<span class="tok-k">def</span> <span class="tok-nf">get_depts</span><span class="tok-p">(</span><span class="tok-n">user</span><span class="tok-p">):</span>
+	<span class="tok-n">depts_contact</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+	<span class="tok-n">depts_backup</span> <span class="tok-o">=</span> <span class="tok-p">[]</span>
+	<span class="tok-k">if</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">email</span><span class="tok-p">:</span>
+		<span class="tok-n">depts_json</span> <span class="tok-o">=</span> <span class="tok-nb">open</span><span class="tok-p">(</span><span class="tok-n">os</span><span class="tok-o">.</span><span class="tok-n">path</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">app</span><span class="tok-o">.</span><span class="tok-n">root_path</span><span class="tok-p">,</span> <span class="tok-s">&#39;static/json/departments.json&#39;</span><span class="tok-p">))</span>
+		<span class="tok-n">json_data</span> <span class="tok-o">=</span> <span class="tok-n">json</span><span class="tok-o">.</span><span class="tok-n">load</span><span class="tok-p">(</span><span class="tok-n">depts_json</span><span class="tok-p">)</span>
+		<span class="tok-k">for</span> <span class="tok-n">line</span> <span class="tok-ow">in</span> <span class="tok-n">json_data</span><span class="tok-p">:</span>
+			<span class="tok-k">if</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">line</span><span class="tok-p">][</span><span class="tok-s">&quot;Contact&quot;</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span> <span class="tok-o">==</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">email</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">():</span>
+				<span class="tok-n">depts_contact</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">)</span>
+			<span class="tok-k">if</span> <span class="tok-n">json_data</span><span class="tok-p">[</span><span class="tok-n">line</span><span class="tok-p">][</span><span class="tok-s">&quot;Backup&quot;</span><span class="tok-p">]</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">()</span> <span class="tok-o">==</span> <span class="tok-n">user</span><span class="tok-o">.</span><span class="tok-n">email</span><span class="tok-o">.</span><span class="tok-n">lower</span><span class="tok-p">():</span>
+				<span class="tok-n">depts_backup</span><span class="tok-o">.</span><span class="tok-n">append</span><span class="tok-p">(</span><span class="tok-n">line</span><span class="tok-p">)</span>
+	<span class="tok-k">return</span> <span class="tok-n">depts_contact</span><span class="tok-p">,</span> <span class="tok-n">depts_backup</span>
+</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_to_redeploy_recordtrac">How to Redeploy RecordTrac</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_how_to_maintain_recordtrac">How to Maintain RecordTrac</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_api_documentation">API Documentation</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="api.html">Api</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_developer_documentation">Developer Documentation</h2>
+<h2 id="_populate_users_with_departments">populate_users_with_departments</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>How to modify and develop the app&#8217;s source code.</p>
+<p>This associates city employee with a particular department.</p>
 </div>
-<div class="sect2">
-<h3 id="_source_code">Source Code</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/codeforamerica/public-records">Source Code (Github)</a></p>
-</li>
-<li>
-<p><a href="https://github.com/codeforamerica/public-records/issues">Issue Tracker (Github)</a></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_developer_docs">Developer Docs</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="db-helpers.html">Db Helpers</a></p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code class="python language-python"><span class="tok-k">def</span> <span class="tok-nf">populate_users_with_departments</span><span class="tok-p">():</span>
+	<span class="tok-n">users</span> <span class="tok-o">=</span> <span class="tok-n">get_objs</span><span class="tok-p">(</span><span class="tok-s">&quot;User&quot;</span><span class="tok-p">)</span>
+	<span class="tok-k">for</span> <span class="tok-n">u</span> <span class="tok-ow">in</span> <span class="tok-n">users</span><span class="tok-p">:</span>
+		<span class="tok-n">dept</span> <span class="tok-o">=</span> <span class="tok-n">get_dept</span><span class="tok-p">(</span><span class="tok-n">u</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">dept</span><span class="tok-p">:</span>
+			<span class="tok-n">update_obj</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;department&quot;</span><span class="tok-p">,</span> <span class="tok-n">val</span> <span class="tok-o">=</span> <span class="tok-n">dept</span><span class="tok-p">,</span> <span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">u</span><span class="tok-p">)</span>
+		<span class="tok-n">depts_contact</span><span class="tok-p">,</span> <span class="tok-n">depts_backup</span> <span class="tok-o">=</span> <span class="tok-n">get_depts</span><span class="tok-p">(</span><span class="tok-n">u</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">depts_contact</span><span class="tok-p">:</span>
+			<span class="tok-n">update_obj</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;contact_for&quot;</span><span class="tok-p">,</span> <span class="tok-n">val</span> <span class="tok-o">=</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">depts_contact</span><span class="tok-p">),</span> <span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">u</span><span class="tok-p">)</span>
+		<span class="tok-k">if</span> <span class="tok-n">depts_backup</span><span class="tok-p">:</span>
+			<span class="tok-n">update_obj</span><span class="tok-p">(</span><span class="tok-n">attribute</span> <span class="tok-o">=</span> <span class="tok-s">&quot;backup_for&quot;</span><span class="tok-p">,</span> <span class="tok-n">val</span> <span class="tok-o">=</span> <span class="tok-s">&quot;,&quot;</span><span class="tok-o">.</span><span class="tok-n">join</span><span class="tok-p">(</span><span class="tok-n">depts_backup</span><span class="tok-p">),</span> <span class="tok-n">obj</span> <span class="tok-o">=</span> <span class="tok-n">u</span><span class="tok-p">)</span>
+</code></pre>
 </div>
 </div>
 </div>
@@ -507,7 +579,7 @@ Issues and feature backlog are tracked through <a href="https://github.com/codef
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-24 14:49:34 PDT
+Last updated 2013-10-24 18:11:27 PDT
 </div>
 </div>
 </body>
