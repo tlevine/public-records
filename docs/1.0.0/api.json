@@ -1,67 +1,67 @@
 {
-  "date_created": "2013-06-12T16:59:18.998278", 
-  "subscribers": [
+  "current_owner": 14, 
+  "creator_id": null, 
+  "department": null, 
+  "extended": null, 
+  "text": "I need a copy of the resolution declaring February 23, 2013 Open Data Day in the City of Oakland.", 
+  "status": "Closed. Fulfilled", 
+  "owners": [
     {
-      "owner_id": null, 
-      "date_created": "2013-06-12T16:59:20.203865", 
+      "date_created": "2013-06-12T16:59:19.569128", 
       "request_id": 1, 
+      "user_id": 2, 
       "id": 1, 
-      "user_id": 1
+      "reason": "She is the open government coordinator"
+    }, 
+    {
+      "date_created": "2013-06-25T00:03:04.755757", 
+      "request_id": 1, 
+      "user_id": 6, 
+      "id": 14, 
+      "reason": "Closed request."
+    }, 
+    {
+      "date_created": "2013-06-13T21:56:13.163716", 
+      "request_id": 1, 
+      "user_id": 19, 
+      "id": 5, 
+      "reason": "He's the PRR liaison"
     }
   ], 
-  "creator_id": null, 
   "status_updated": "2013-06-25T00:03:04.932147", 
-  "department": null, 
-  "status": "Closed. Fulfilled", 
-  "current_owner": 14, 
+  "id": 1, 
+  "subscribers": [
+    {
+      "date_created": "2013-06-12T16:59:20.203865", 
+      "request_id": 1, 
+      "user_id": 1, 
+      "id": 1, 
+      "owner_id": null
+    }
+  ], 
+  "date_created": "2013-06-12T16:59:18.998278", 
   "notes": [
     {
       "date_created": "2013-06-25T00:02:55.982495", 
-      "request_id": 1, 
       "text": "Sent the resolution and a link online for more information.", 
-      "id": 3, 
-      "user_id": 6
+      "request_id": 1, 
+      "user_id": 6, 
+      "id": 3
     }
   ], 
-  "extended": null, 
-  "owners": [
-    {
-      "reason": "She is the open government coordinator", 
-      "date_created": "2013-06-12T16:59:19.569128", 
-      "request_id": 1, 
-      "id": 1, 
-      "user_id": 2
-    }, 
-    {
-      "reason": "Closed request.", 
-      "date_created": "2013-06-25T00:03:04.755757", 
-      "request_id": 1, 
-      "id": 14, 
-      "user_id": 6
-    }, 
-    {
-      "reason": "He's the PRR liaison", 
-      "date_created": "2013-06-13T21:56:13.163716", 
-      "request_id": 1, 
-      "id": 5, 
-      "user_id": 19
-    }
-  ], 
-  "text": "I need a copy of the resolution declaring February 23, 2013 Open Data Day in the City of Oakland.", 
   "records": [
     {
-      "date_created": "2013-06-25T00:02:23.329666", 
-      "access": null, 
-      "filename": null, 
-      "description": "Resolution 84208 CMS", 
       "user_id": 6, 
-      "url": "http://oakland.legistar.com/LegislationDetail.aspx?ID=1283701&GUID=32C352ED-A6F4-4933-AA84-0CD72419ABDA&Options=ID|Text|&Search=84208", 
-      "request_id": 1, 
       "download_url": null, 
+      "description": "Resolution 84208 CMS", 
+      "doc_id": null, 
+      "filename": null, 
+      "request_id": 1, 
+      "url": "http://oakland.legistar.com/LegislationDetail.aspx?ID=1283701&GUID=32C352ED-A6F4-4933-AA84-0CD72419ABDA&Options=ID|Text|&Search=84208", 
       "id": 3, 
-      "doc_id": null
+      "access": null, 
+      "date_created": "2013-06-25T00:02:23.329666"
     }
   ], 
-  "id": 1, 
   "qas": []
 }
