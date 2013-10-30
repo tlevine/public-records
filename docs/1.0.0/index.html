@@ -432,8 +432,8 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <ul class="sectlevel1">
 <li><a href="#_welcome">Welcome</a></li>
 <li><a href="#_what_is_recordtrac">What is RecordTrac?</a></li>
-<li><a href="#_how_em_citizens_em_use_recordtrac">How <em>citizens</em> use RecordTrac</a></li>
-<li><a href="#_how_em_governments_em_use_recordtrac">How <em>governments</em> use RecordTrac</a></li>
+<li><a href="#_how_to_make_a_public_records_request_using_recordtrac">How to make a public records request using RecordTrac.</a></li>
+<li><a href="#_how_to_respond_to_a_public_records_request_using_recordtrac">How to respond to a public records request using RecordTrac.</a></li>
 <li><a href="#_how_recordtrac_is_built">How RecordTrac is Built</a></li>
 <li>
 <ul class="sectlevel2">
@@ -488,7 +488,7 @@ For help contact oakland|@|codeforamerica.org
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_em_citizens_em_use_recordtrac">How <em>citizens</em> use RecordTrac</h2>
+<h2 id="_how_to_make_a_public_records_request_using_recordtrac">How to make a public records request using RecordTrac.</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -503,7 +503,7 @@ For help contact oakland|@|codeforamerica.org
 </div>
 </div>
 <div class="sect1">
-<h2 id="_how_em_governments_em_use_recordtrac">How <em>governments</em> use RecordTrac</h2>
+<h2 id="_how_to_respond_to_a_public_records_request_using_recordtrac">How to respond to a public records request using RecordTrac.</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -534,16 +534,16 @@ For help contact oakland|@|codeforamerica.org
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://flask.pocoo.org">Flask 0.10</a></p>
+<p><a href="http://flask.pocoo.org">Flask 0.10</a> is used as the backend Python framework.</p>
 </li>
 <li>
-<p><a href="http://getbootstrap.com/2.3.2">Bootstrap 2.3.2</a></p>
+<p><a href="http://getbootstrap.com/2.3.2">Bootstrap 2.3.2</a> is used as the frontend HTML/CSS/JS framework.</p>
 </li>
 <li>
-<p><a href="http://www.postgresapp.com">Postgres 9.3.0</a></p>
+<p><a href="http://www.postgresapp.com">Postgres 9.3.0</a> is used to manage the database.</p>
 </li>
 <li>
-<p><a href="http://www.python.org/getit">Python 2.7.5</a></p>
+<p><a href="http://www.python.org/getit">Python 2.7.5</a> is used as the foundational programming language.</p>
 </li>
 </ul>
 </div>
@@ -553,17 +553,29 @@ For help contact oakland|@|codeforamerica.org
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://fortawesome.github.io/Font-Awesome">Font Awesome 3.2.1</a></p>
+<p><a href="http://fortawesome.github.io/Font-Awesome">Font Awesome 3.2.1</a> is used to render all the icons on the site.</p>
 </li>
 <li>
-<p><a href="http://www.datatables.net">DataTables 1.9.4</a></p>
+<p><a href="http://www.datatables.net">DataTables 1.9.4</a> is used to display the full list of requests in "/requests".</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_service_dependencies">Service dependencies</h3>
-
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://sendgrid.com/">SendGrid</a> is used for all email notifications about requests.</p>
+</li>
+<li>
+<p><a href="http://akismet.com/">Askimet</a> is used as a spam filter.</p>
+</li>
+<li>
+<p><a href="http://www.captcha.net/">Captcha</a> is used to allow requesters to override the spam filter if necessary.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_feature_backlog">Feature backlog</h3>
@@ -641,7 +653,7 @@ For help contact oakland|@|codeforamerica.org
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-29 17:31:10 PDT
+Last updated 2013-10-30 11:02:59 PDT
 </div>
 </div>
 </body>
