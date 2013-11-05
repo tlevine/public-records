@@ -480,22 +480,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 	<span class="tok-sd">&quot;&quot;&quot; Query the database for an object via its class/type (defined in models.py) and ID and return the object. &quot;&quot;&quot;</span>
 	<span class="tok-k">if</span> <span class="tok-ow">not</span> <span class="tok-n">obj_id</span><span class="tok-p">:</span>
 		<span class="tok-k">return</span> <span class="tok-bp">None</span>
-	<span class="tok-c"># There has to be a better way of doing this</span>
-	<span class="tok-k">if</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;User&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">User</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Request&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Request</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Owner&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Owner</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Note&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Note</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;QA&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">QA</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Subscriber&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Subscriber</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">elif</span> <span class="tok-n">obj_type</span> <span class="tok-o">==</span> <span class="tok-s">&quot;Record&quot;</span><span class="tok-p">:</span>
-		<span class="tok-k">return</span> <span class="tok-n">Record</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
-	<span class="tok-k">return</span> <span class="tok-bp">None</span>
+	<span class="tok-k">return</span> <span class="tok-nb">eval</span><span class="tok-p">(</span><span class="tok-n">obj_type</span><span class="tok-p">)</span><span class="tok-o">.</span><span class="tok-n">query</span><span class="tok-o">.</span><span class="tok-n">get</span><span class="tok-p">(</span><span class="tok-n">obj_id</span><span class="tok-p">)</span>
 </code></pre>
 </div>
 </div>
@@ -1059,7 +1044,7 @@ object, if the object is not provided:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-30 11:02:56 PDT
+Last updated 2013-11-04 22:27:38 PST
 </div>
 </div>
 </body>

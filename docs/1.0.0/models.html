@@ -641,6 +641,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 <span class="tok-c"># A person subscribed to a request, who may or may not have created the request, and may or may not own a part of the request.</span>
 	<span class="tok-n">__tablename__</span> <span class="tok-o">=</span> <span class="tok-s">&#39;subscriber&#39;</span>
 	<span class="tok-nb">id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">primary_key</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span>
+	<span class="tok-n">should_notify</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Boolean</span><span class="tok-p">,</span> <span class="tok-n">default</span> <span class="tok-o">=</span> <span class="tok-bp">True</span><span class="tok-p">)</span> <span class="tok-c"># Allows a subscriber to unsubscribe</span>
 	<span class="tok-n">user_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;user.id&#39;</span><span class="tok-p">))</span>
 	<span class="tok-n">request_id</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Integer</span><span class="tok-p">,</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">ForeignKey</span><span class="tok-p">(</span><span class="tok-s">&#39;request.id&#39;</span><span class="tok-p">))</span>
 	<span class="tok-n">date_created</span> <span class="tok-o">=</span> <span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">Column</span><span class="tok-p">(</span><span class="tok-n">db</span><span class="tok-o">.</span><span class="tok-n">DateTime</span><span class="tok-p">)</span>
@@ -755,7 +756,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2013-10-30 11:02:58 PDT
+Last updated 2013-11-04 22:27:40 PST
 </div>
 </div>
 </body>
